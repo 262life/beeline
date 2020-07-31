@@ -1,6 +1,6 @@
 # kube functions
 
-# Version: v0.0.0
+# Version: 
 
 alias k='NO_PROXY="" HTTPS_PROXY="" no_proxy="" https_proxy="" KUBECONFIG=`kubeconfig` HTTP_PROXY="" http_proxy="" /usr/local/bin/kubectl'
 alias kubectl='NO_PROXY="" HTTPS_PROXY="" no_proxy="" https_proxy="" KUBECONFIG=`kubeconfig` HTTP_PROXY="" http_proxy="" /usr/local/bin/kubectl'

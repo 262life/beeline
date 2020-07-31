@@ -1,0 +1,17 @@
+image:
+  file: .gitpod.Dockerfile
+tasks:
+  - init: 'set +x; clear'
+    command: |
+      
+      function gt() {
+        TAG=${1}; git tag --delete ${TAG} 2>/dev/null; git push  --delete origin ${TAG} 2>/dev/null; git tag  ${TAG}; git push --tags
+      }
+
+      mkdir ~/.ssh 2>/dev/null
+      echo $LUCIFER_ID_RSA | base64 --decode > ~/.ssh/id_rsa
+      echo $LUCIFER_ID_RSA_PUB | base64 --decode > ~/.ssh/id_rsa.pub
+      echo $LUCIFER_ID_RSA_CERT_PUB | base64 --decode > ~/.ssh/id_rsa-cert.pub
+      chmod -R 700 ~/.ssh
+      source <(kubectl completion bash)
+      source <(curl -s  https://raw.githubusercontent.com/BobDotMe/shortcuts/master/.k8s_shortcuts)
