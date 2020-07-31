@@ -50,4 +50,4 @@ jobs:
           ALLOW_TAG_PREFIX: "true"
         with:
           args: |
-            .k8s_shortcuts
+            k8s_shortcuts
