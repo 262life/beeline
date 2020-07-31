@@ -28,6 +28,18 @@ jobs:
       - name: Build Version
         run: |
           bash -c "chmod 755 .github/scripts/plugins.sh; .github/scripts/version.sh"
+          bash -c "chmod 755 .github/scripts/readme.sh; .github/scripts/readme.sh"
+          bash -c "chmod 755 .github/scripts/docs.sh; .github/scripts/docs.sh"
+      - name: push
+        uses: github-actions-x/commit@v2.6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          push-branch: 'master'
+          commit-message: 'publish'
+          force-add: 'true'
+          files:  README.md VERSION 
+          name: rsliotta
+          email: bob@bobdot.me
       - name: Release
         uses: docker://antonyurchenko/git-release:latest
         env:
@@ -40,24 +52,3 @@ jobs:
         with:
           args: |
             k8s_shortcuts
-      - id: get_latest_version
-        uses: pozetroninc/github-action-get-latest-release@master
-        with:
-            repository: BobDotMe/k8s_shortcuts
-      - name: Set Latest Version
-        run: |    
-          echo "${{ steps.get_latest_version.outputs.release }}" > LATEST_VERSION
-      - name: Create Version
-        run: |
-          bash -c "chmod 755 .github/scripts/readme.sh; .github/scripts/readme.sh"
-          bash -c "chmod 755 .github/scripts/docs.sh; .github/scripts/docs.sh"
-      - name: push
-        uses: github-actions-x/commit@v2.6
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          push-branch: 'master'
-          commit-message: 'publish'
-          force-add: 'true'
-          files:  README.md LATEST_VERSION VERSION 
-          name: rsliotta
-          email: bob@bobdot.me
