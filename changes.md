@@ -1,8 +1,5 @@
-## [0.9.2-rc.1] - 2020-06-30
+## [1.0] - 2020-07-31
 ### Changes
-- Cleanup for codefactor
 
-## [0.9.1] - 2020-06-30
-### Changes
 - Initial Release
 
