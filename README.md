@@ -1,4 +1,4 @@
-<img alt="bob" align="left" src="docs/BoBDot-color.png" width="20%" height="20%">
+<img alt="bob" align="left" src="BoBDot-color.png" width="20%" height="20%">
 
 ## SHORTCUTS - A library of Kubernetes Shortcuts
 
