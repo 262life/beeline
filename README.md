@@ -2,7 +2,7 @@
 
 ## K8s_SHORTCUTS - A library of Kubernetes Shortcuts
 
-This is a collection of kubectl and bash/zsh shortcuts to make life easier.
+This is a collection of kubectl and bash/zsh shortcuts to make interactions with Kubernetes a bit easier.
 
 ![Hex.pm](https://img.shields.io/hexpm/l/apa)
 [![CodeFactor](https://www.codefactor.io/repository/github/bobdotme/k8s_shortcuts/badge)](https://www.codefactor.io/repository/github/bobdotme/k8s_shortcuts)
@@ -12,16 +12,25 @@ This is a collection of kubectl and bash/zsh shortcuts to make life easier.
 [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/BobDotMe/k8s_shortcuts)
 [![Develop on Okteto](https://img.shields.io/badge/Okteto-Kubernetes%20for%20Developers-brightgreen?logo=apache-echarts)](https://cloud.okteto.com/deploy)
 
-k8s_shortcuts turns a simple container instanciation into a power support tool for general troubleshooting, service rendering, and performance evaluation.  It does this by creating a core set services that house and manage the utilities as well as a super lightweight container to invoke in a pod.
-
-k8s_shortcuts integrates deeply into cloud native environments leveraging extension points and providing a seamless experience for scheduling, lifecycle management, resource management, security, monitoring, and user experience.
+k8s_shortcuts integrates into your bash or zsh shell to provide a number of useful shortcuts as well as the ability to keep individual kubectl config files for each cluster.  The makes mangaging the configs much easier to read and manage in the end.
 
 For more details about the solutions currently supported by k8s_shortcuts, please refer to the [project status section](#project-status) below.
 We plan to continue adding support for many common functions required based on community demand and engagement in future releases. 
 
 ## Getting Started and Documentation
 
-For installation, deployment, and administration, see our [Documentation](DOCUMENTATION.md)
+To use the scripts it is *recommended* that you have setup either bash or zsh completion in advance.
+Once enabled, you can also enable kubectl's auto completion as well.
+
+To enable these shortcuts you must source them into your shell.  This is dependent on the shell you are using.
+
+You can either download the desired version you would like or if you are lazy like me do something like this if you use bash:
+
+```
+source <(kubectl completion bash)
+source <(curl -s -L https://github.com/BobDotMe/k8s_shortcuts/releases/latest/download/k8s_shortcuts)gitpod /workspace/k8s_shortcuts
+```
+Restart your shell and you should be good to go!  Now, review the [documentation](DOCUMENTATION.md) 
 
 ## Contributing
 
@@ -49,9 +58,7 @@ negatively.
 
 ## Project Status
 
-We consider the latest release to be ****stable**.  If you use a release candidate proceed with caution. 
-
-
+We consider the latest release to be **stable**.  If you use a release candidate proceed with caution. 
 
 
 ### Official Releases
