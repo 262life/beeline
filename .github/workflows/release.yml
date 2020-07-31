@@ -24,7 +24,7 @@ jobs:
           else
             echo "::set-env name=RELEASE_PRE::false"
             echo "::set-env name=RELEASE_LATEST::true"
-          fi  
+          fi
       - name: Build Version
         run: |
           bash -c "chmod 755 .github/scripts/version.sh; .github/scripts/version.sh"
@@ -37,7 +37,7 @@ jobs:
           push-branch: 'master'
           commit-message: 'publish'
           force-add: 'true'
-          files:  README.md VERSION 
+          files:  README.md VERSION
           name: rsliotta
           email: bob@bobdot.me
       - name: Release
