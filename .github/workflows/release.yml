@@ -40,12 +40,13 @@ jobs:
         with:
           args: |
             k8s_shortcuts
-      - id: current_version
+      - id: get_latest_version
         uses: pozetroninc/github-action-get-latest-release@master
         with:
             repository: BobDotMe/k8s_shortcuts
+      - name: Set Latest Version
         run: |    
-          echo " ${{ steps.current_version.outputs.release }} > LATEST_VERSION
+          echo " ${{ steps.get_latest_version.outputs.release }} > LATEST_VERSION
       - name: Create Version
         run: |
           bash -c "chmod 755 .github/scripts/readme.sh; .github/scripts/readme.sh"
