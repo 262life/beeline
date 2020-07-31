@@ -5,7 +5,7 @@
 This is a collection of kubectl and bash/zsh shortcuts to make life easier.
 
 ![Hex.pm](https://img.shields.io/hexpm/l/apa)
-[![CodeFactor](https://www.codefactor.io/repository/github/bobdotme/bob/badge)](https://www.codefactor.io/repository/github/bobdotme/k8s_shortcuts)
+[![CodeFactor](https://www.codefactor.io/repository/github/bobdotme/k8s_shortcuts/badge)](https://www.codefactor.io/repository/github/bobdotme/k8s_shortcuts)
 ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/BobDotMe/k8s_shortcuts/release/v0.9.1)
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/BobDotMe/k8s_shortcuts)
 ![Twitter Follow](https://img.shields.io/twitter/follow/BobDotMe?style=social)
@@ -17,11 +17,11 @@ k8s_shortcuts turns a simple container instanciation into a power support tool f
 k8s_shortcuts integrates deeply into cloud native environments leveraging extension points and providing a seamless experience for scheduling, lifecycle management, resource management, security, monitoring, and user experience.
 
 For more details about the solutions currently supported by k8s_shortcuts, please refer to the [project status section](#project-status) below.
-We plan to continue adding support for many common functions required based on community demand and engagement in future releases. See our [roadmap](https://bobdotme.github.io/bob/#!road.md) for more details.
+We plan to continue adding support for many common functions required based on community demand and engagement in future releases. 
 
 ## Getting Started and Documentation
 
-For installation, deployment, and administration, see our [Documentation](https://bobdotme.github.io/bob/#!documentation.md)
+For installation, deployment, and administration, see our [Documentation](https://bobdotme.github.io/k8s_shortcuts/DOCUMENTATION.md)
 
 ## Contributing
 
