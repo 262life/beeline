@@ -20,6 +20,7 @@ alias ke='k edit'
 
 ### ------------  BEGIN Functions
 
+
 function kubectl() { 
   NO_PROXY="" HTTPS_PROXY="" no_proxy="" https_proxy="" KUBECONFIG=`kubeconfig` HTTP_PROXY="" http_proxy="" /usr/local/bin/kubectl $* 
 } 
@@ -83,23 +84,26 @@ function kn() {
 
 khelp() {
 
-cat <<EOD
-These are the latest shortcuts supported:
+cat >&2 <<EOD
+### These are the latest shortcuts supported:
 
-k       = kubectl
-kubectl = improved kubectl with seperate configs
-helm    = improved helm v2 with seperate configs
-helm3   = improved helm v3 with seperate configs
+    k       = kubectl
+    kubectl = improved kubectl with seperate configs
+    helm    = improved helm v2 with seperate configs
+    helm3   = improved helm v3 with seperate configs
 
-kh      = this help page
-kg      = kubectl get
-kgp     = kubectl get pods
-kgs     = kubectl get services
-kd      = kubectl describe
-kdp     = kubectl describe pod
-kds     = kubectl describe service
-kl      = kubectl logs
-
+    kh      = this help page
+    kg      = kubectl get
+    kgp     = kubectl get pods
+    kgs     = kubectl get services
+    kd      = kubectl describe
+    kdp     = kubectl describe pod
+    kds     = kubectl describe service
+    kl      = kubectl logs
 EOD
 
 }
+
+## For helpdocs
+
+if [ "$1" == '-h' ]; then khelp; fi
