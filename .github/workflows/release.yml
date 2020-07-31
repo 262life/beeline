@@ -29,7 +29,6 @@ jobs:
         run: |
           bash -c "chmod 755 .github/scripts/plugins.sh; .github/scripts/version.sh"
           bash -c "chmod 755 .github/scripts/readme.sh; .github/scripts/readme.sh"
-      - name: Build Action
       - name: push
         uses: github-actions-x/commit@v2.6
         with:
