@@ -2,7 +2,7 @@
 
 
 CV=$(cat VERSION)
-echo "Version: $CV"
+echo Version: "$CV"
 
 if echo "$OSTYPE" | grep -q 'darwin' ; then sedopts='-i .bak'; else sedopts='-i'; fi
 
