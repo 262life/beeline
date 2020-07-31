@@ -46,7 +46,7 @@ jobs:
             repository: BobDotMe/k8s_shortcuts
       - name: Set Latest Version
         run: |    
-          echo " ${{ steps.get_latest_version.outputs.release }} > LATEST_VERSION
+          echo "${{ steps.get_latest_version.outputs.release }}"" > LATEST_VERSION
       - name: Create Version
         run: |
           bash -c "chmod 755 .github/scripts/readme.sh; .github/scripts/readme.sh"
