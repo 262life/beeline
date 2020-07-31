@@ -36,7 +36,7 @@ jobs:
           push-branch: 'master'
           commit-message: 'publish'
           force-add: 'true'
-          files: README.md VERSION docs/index.yaml 
+          files: README.md VERSION 
           name: rsliotta
           email: bob@bobdot.me
       - name: Release
