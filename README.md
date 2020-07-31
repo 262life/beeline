@@ -1,18 +1,15 @@
-<img alt="bob" align="left" src="docs/BobDot-color.png" width="20%" height="20%">
+<img alt="bob" align="left" src="docs/BoBDot-color.png" width="20%" height="20%">
 
 ## SHORTCUTS - A library of Kubernetes Shortcuts
 
 Bash on board! (we like to call it BOB) is an open source **general purpose container** for Kubernetes, providing the utilities, support tools and a framework, that allows a diverse set problems to be solved for pod initialization and support to natively integrate with cloud-native environments.
 
 ![Hex.pm](https://img.shields.io/hexpm/l/apa)
-[![CodeFactor](https://www.codefactor.io/repository/github/bobdotme/bob/badge)](https://www.codefactor.io/repository/github/bobdotme/bob)
-![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/BobDotMe/bob/release/v0.9.6)
-![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/BobDotMe/bob)\
-![Docker Pulls](https://img.shields.io/docker/pulls/bobdotme/bob-mini?label=docker%20pulls%20-%20bob-mini)
-![Docker Pulls](https://img.shields.io/docker/pulls/bobdotme/bob-core?label=docker%20pulls%20-%20bob-core)
-![Docker Pulls](https://img.shields.io/docker/pulls/bobdotme/bob-bootstrap?label=docker%20pulls%20-%20bob-bootstrap)\
+[![CodeFactor](https://www.codefactor.io/repository/github/bobdotme/bob/badge)](https://www.codefactor.io/repository/github/bobdotme/k8s_shortcuts)
+![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/BobDotMe/k8s_shortcuts/release/v0.9.1)
+![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/BobDotMe/k8s_shortcuts)\
 ![Twitter Follow](https://img.shields.io/twitter/follow/BobDotMe?style=social)
-[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/BobDotMe/bob)
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/BobDotMe/k8s_shortcuts)
 [![Develop on Okteto](https://img.shields.io/badge/Okteto-Kubernetes%20for%20Developers-brightgreen?logo=apache-echarts)](https://cloud.okteto.com/deploy)
 
 BOB turns a simple container instanciation into a power support tool for general troubleshooting, service rendering, and performance evaluation.  It does this by creating a core set services that house and manage the utilities as well as a super lightweight container to invoke in a pod.
