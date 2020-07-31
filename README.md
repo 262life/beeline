@@ -1,4 +1,4 @@
-<img alt="bob" align="left" src="BoBDot-color.png" width="20%" height="20%">
+<img alt="bob" align="left" src="K8-Shortcut.png" width="20%" height="20%">
 
 ## K8s_SHORTCUTS - A library of Kubernetes Shortcuts
 
