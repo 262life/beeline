@@ -21,7 +21,7 @@ We plan to continue adding support for many common functions required based on c
 
 ## Getting Started and Documentation
 
-For installation, deployment, and administration, see our [Documentation](https://bobdotme.github.io/k8s_shortcuts/DOCUMENTATION.md)
+For installation, deployment, and administration, see our [Documentation](DOCUMENTATION.md)
 
 ## Contributing
 
@@ -62,7 +62,7 @@ Builds from the master branch can have functionality changed and even removed at
 
 ## Licensing
 
-k8s_shortcuts is under the Apache 2.0 [License.](https://bobdotme.github.io/k8s_shortcuts/LICENSE)
+k8s_shortcuts is under the Apache 2.0 [License.](LICENSE)
 
 
 
