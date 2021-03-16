@@ -75,8 +75,7 @@ function kc() {
 
 function kn() {
   if [ ! -z "$1" ]; then
-    x=`k config current-context`
-    k config set-context $x --namespace=$1
+    k config set-context --current --namespace=$1
   fi
   kc
 }
