@@ -105,4 +105,4 @@ EOD
 
 ## For helpdocs
 
-[[ "$1" == '-h' ]] &&; khelp
+[[ "$1" == "-h" ]] &khelp

@@ -11,5 +11,3 @@ sed ${sedopts} -e "s/^\# Version\:.*$/# Version: $CV/g" k8s_shortcuts
 echo result:
 echo "kubectl-bob-version: $(grep 'Version:' k8s_shortcuts)"
 
-exit 0;
-

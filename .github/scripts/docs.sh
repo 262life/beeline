@@ -2,7 +2,7 @@
 
 # This creates helpdocs
 
-echo "# k8s_shortcuts - Documenation" > DOCUMENTATION.md
+echo "# k8s_shortcuts - Documentation" > DOCUMENTATION.md
 echo ""             >> DOCUMENTATION.md
 
 
