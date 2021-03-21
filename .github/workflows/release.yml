@@ -10,18 +10,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
       - run: |
-          echo "RELEASE_NAME_POSTFIX=(Codename: '$(cat CODENAME)')" >> $GITHUB_ENV" 
+          echo "RELEASE_NAME_POSTFIX=(Codename: '$(cat CODENAME)')" >> $GITHUB_ENV
       - name: Set Version
         run: |
-          echo "RELEASE_VERSION=$(echo $GITHUB_REF | awk -F\/ '{print $3}')" >> $GITHUB_ENV" 
+          echo "RELEASE_VERSION=$(echo $GITHUB_REF | awk -F\/ '{print $3}')" >> $GITHUB_ENV
           echo "Release Version is $RELEASE_VERSION"
           echo "$RELEASE_VERSION" > VERSION
           if echo "$RELEASE_VERSION" | grep "rc" > /dev/null ; then
-            echo "RELEASE_PRE=true" >> $GITHUB_ENV" 
-            echo "RELEASE_LATEST=false" >> $GITHUB_ENV" 
+            echo "RELEASE_PRE=true" >> $GITHUB_ENV 
+            echo "RELEASE_LATEST=false" >> $GITHUB_ENV 
           else
-            echo "RELEASE_PRE=false" >> $GITHUB_ENV" 
-            echo "RELEASE_LATEST=true" >> $GITHUB_ENV" 
+            echo "RELEASE_PRE=false" >> $GITHUB_ENV 
+            echo "RELEASE_LATEST=true" >> $GITHUB_ENV 
           fi
       - name: Build Version
         run: |
