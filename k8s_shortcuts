@@ -105,4 +105,4 @@ EOD
 
 ## For helpdocs
 
-if [ "$1" == '-h' ]; then khelp; fi
+[[ "$1" == '-h' ]] &&; khelp
