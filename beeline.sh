@@ -1,4 +1,6 @@
-#!/bin/bash 
+# shellcheck disable=SC2148
+###!/bin/bash 
+### Do not change the shell on the above line to zsh.  It is only in place to use shellcheck 
 
 ### ------------  BEGIN Functions
 
