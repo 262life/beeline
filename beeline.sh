@@ -117,7 +117,7 @@ function kc() {
 
 function kn() {
   if [ -n "$1" ]; then
-    x=`k config current-context`
+    ### x=`k config current-context`
     export KS_NAMESPACE=${1}
     #/usr/local/bin/kubectl config set-context "$KS_CONTEXT" --namespace="$1"
   fi
