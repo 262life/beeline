@@ -49,4 +49,4 @@ jobs:
           ALLOW_EMPTY_CHANGELOG: "false"
         with:
           args: |
-            k8s_shortcuts
+            beeline.sh
