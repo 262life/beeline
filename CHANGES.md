@@ -1,5 +1,10 @@
 ### Changes File
 
+## [2.0.0-RC1] - 2021-03-21
+### Changes
+
+- This is an entirely new concept that allows a different context/namespace in each terminal window.  It supports multiple logins too...
+
 ## [1.0.1] - 2021-03-21
 ### Changes
 
