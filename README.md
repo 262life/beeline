@@ -6,7 +6,7 @@ This is a collection of kubectl and bash/zsh shortcuts to make interactions with
 
 ![Hex.pm](https://img.shields.io/hexpm/l/apa)
 [![CodeFactor](https://www.codefactor.io/repository/github/bobdotme/k8s_shortcuts/badge)](https://www.codefactor.io/repository/github/bobdotme/k8s_shortcuts)
-![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/BobDotMe/k8s_shortcuts/release/v2.0.0RC1?label=build%20v2.0.0RC1)
+![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/BobDotMe/k8s_shortcuts/release/v2.0.0-RC1?label=build%20v2.0.0-RC1)
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/BobDotMe/k8s_shortcuts)
 ![Twitter Follow](https://img.shields.io/twitter/follow/BobDotMe?style=social)
 [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/BobDotMe/k8s_shortcuts)
