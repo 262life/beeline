@@ -10,7 +10,7 @@ This is a collection of kubectl and bash/zsh shortcuts to make interactions with
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/262life/beeline)
 ![Twitter Follow](https://img.shields.io/twitter/follow/262life?style=social)
 [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/262life/beeline)
-[
+
 beeline.k8s integrates into your bash or zsh shell to provide a number of useful shortcuts as well as the ability to keep individual kubectl config files for each cluster.  The makes mangaging the configs much easier to read and manage in the end.
 
 For more details about the solutions currently supported by beeline.k8s, please refer to the [project status section](#project-status) below.
@@ -50,7 +50,7 @@ Please use the following to reach members of the community:
 ### Reporting Security Vulnerabilities
 
 If you find a vulnerability or a potential vulnerability in Rook please let us know immediately at
-[support@262.life(mailto:support@262.life). We'll send a confirmation email to acknowledge your
+[support@262.life](mailto:support@262.life). We'll send a confirmation email to acknowledge your
 report, and we'll send an additional email when we've identified the issues positively or
 negatively.
 
@@ -62,8 +62,8 @@ We consider the latest release to be **stable**.  If you use a release candidate
 
 ### Official Releases
 
-Official releases of beeline.k8s can be found on the [releases page](https://github.com/262life/beeline.k8s/releases).
-Please note that it is **strongly recommended** that you use [official releases](https://github.com/262life/beeline.k8s/releases) of beeline.k8s, as unreleased versions from the master branch are subject to changes and incompatibilities that will not be supported in the official releases.
+Official releases of beeline.k8s can be found on the [releases page](https://github.com/262life/beeline/releases).
+Please note that it is **strongly recommended** that you use [official releases](https://github.com/262life/beeline/releases) of beeline.k8s, as unreleased versions from the master branch are subject to changes and incompatibilities that will not be supported in the official releases.
 Builds from the master branch can have functionality changed and even removed at any time without compatibility support and without prior notice.
 
 ## Licensing
