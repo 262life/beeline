@@ -100,7 +100,7 @@ function kc() {
     white=$(printf    '\e[0m\e[97m')
     defcolor=$(printf '\e[0m\e[39m')
     wheel=$(printf    '\u2388' )
-    export PS1="%{${white}%}[%{${wheel}%}:%{${cyan}%}$KS_CONTEXT:$KS_NAMESPACE%{${white}%}]%{${defcolor}%} %n:%/$ "
+    export PS1="%{${white}%}[B:%{${cyan}%}$KS_CONTEXT:$KS_NAMESPACE%{${white}%}]%{${defcolor}%} %n:%/$ "
     echo "Context    :$KS_CONTEXT";
     echo "Namespace  :$KS_NAMESPACE";
     echo ""
