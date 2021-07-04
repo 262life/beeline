@@ -1,4 +1,4 @@
-# k8s_shortcuts - Documenation
+# beeline - Documentation
 
 ### These are the latest shortcuts supported:
 
