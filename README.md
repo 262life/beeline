@@ -23,11 +23,27 @@ Once enabled, you can also enable kubectl's auto completion as well.
 
 To enable these shortcuts you must source them into your shell.  This is dependent on the shell you are using.
 
-You can either download the desired version you would like or if you are lazy like me do something like this if you use bash:
+You can either download the desired version you would like or if you are lazy like me do something like this if you use zsh:
 
 ```
-source <(kubectl completion bash)
-source <(curl -s -L https://github.com/262life/beeline.k8s/releases/latest/download/beeline.k8s)gitpod /workspace/beeline.k8s
+###  Setup auto-completion
+eval $(/opt/homebrew/bin/brew shellenv)
+FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+
+ZSH_DISABLE_COMPFIX=true
+autoload -Uz compinit 
+compinit 2>/dev/null
+
+#####  Setup Beeline
+## Defaults if you like
+export KS_CONTEXT='cities'
+export KS_NAMESPACE='kube-system'
+
+[[ ! -f ~/.beeline.k8s ]]  \
+&& curl -s -L https://github.com/262life/beeline/releases/latest/download/beeline.sh  > ~/.beeline.k8s
+
+source ~/.beeline.k8s
+##### End of Beeline
 ```
 Restart your shell and you should be good to go!  Now, review the [documentation](DOCUMENTATION.md) 
 

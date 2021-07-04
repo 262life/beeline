@@ -50,3 +50,4 @@ jobs:
         with:
           args: |
             beeline.sh
+            zshrc-example
