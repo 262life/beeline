@@ -1,18 +1,20 @@
+###  Setup auto-completion
 ZSH_DISABLE_COMPFIX=true
 autoload -Uz compinit 
 compinit
-
-
 fpath=(/usr/local/share/zsh-completions $fpath)
-source <(kubectl completion zsh)
-export KUBECONFIG=~/.kube/inc-fed.cfg:~/.kube/config
-. /Users/liottar/.k8s_shortcuts
 
+#####  Setup Beeline
 
-set -o PROMPT_SUBST
-cyan=$(printf   '\e[0m\e[36m')
-green=$(printf ' \e[0m\e[32m')
-export PS1="[K8s: $(echo \$KS_CONTEXT:\$KS_NAMESPACE)] %n:%/$ "
+## Defaults if you like
+export KS_CONTEXT='avengers'
+export KS_NAMESPACE='kube-system'
+
+[[ ! -f ~/.beeline.k8s ]]  \
+&& cp ~/projects/262life/k8s_shortcuts/beeline.k8s ~/.beeline.k8s   #curl -s -L https://github.com/BobDotMe/k8s_shortcuts/releases/latest/download/k8s_shortcuts  > ~/.k8s_shortcuts
+
+source ~/.beeline.k8s
+##### End of Beeline
 
 export GOPATH=$HOME/go
 export GOROOT=$(go env GOROOT)  
@@ -29,7 +31,8 @@ alias flush_dns='sudo killall -HUP mDNSResponder;sudo dscacheutil -flushcache'
 alias srecord='asciinema'
 alias sp='bbedit --scratchpad --launch'
 
-
-
+function gt() {
+  TAG=${1}; git tag --delete ${TAG} 2>/dev/null; git push  --delete origin ${TAG} 2>/dev/null; git tag  ${TAG}; git push --tags
+}
 
 

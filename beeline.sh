@@ -1,62 +1,86 @@
-# shellcheck disable=SC2148
-###!/bin/bash 
-### Do not change the shell on the above line to zsh.  It is only in place to use shellcheck 
+#!/bin/bash 
 
 ### ------------  BEGIN Functions
-
 
 function main() {
 
   # shellcheck disable=SC1090
   source <(/usr/local/bin/kubectl completion zsh)
-  #source <(velero completion zsh)
 
-  # kube functions
+  compdef k='kubectl'
+  setopt complete_aliases
 
-  alias k='NO_PROXY="" HTTPS_PROXY="" no_proxy="" https_proxy="" KUBECONFIG=`kubeconfig` HTTP_PROXY="" http_proxy="" /usr/local/bin/kubectl --namespace "$KS_NAMESPACE" --context "$KS_CONTEXT"'
-  alias kubectl='NO_PROXY="" HTTPS_PROXY="" no_proxy="" https_proxy="" KUBECONFIG=`kubeconfig` HTTP_PROXY="" http_proxy="" /usr/local/bin/kubectl --namespace "$KS_NAMESPACE" --context "$KS_CONTEXT"'
-  alias helm='KUBECONFIG=`kubeconfig` /usr/local/bin/helm --namespace $KS_NAMESPACE --kube-context $KS_CONTEXT'
-  alias velero='NO_PROXY="" HTTPS_PROXY="" no_proxy="" https_proxy="" KUBECONFIG=`kubeconfig` HTTP_PROXY="" http_proxy="" /usr/local/bin/velero  --namespace velero --kubecontext $KS_CONTEXT'
+  #  Bash Version ####  complete -F _complete_alias k
 
-  alias kh='khelp'
-  alias kg='k get'
-  alias kgp='k get pods'
-  alias kgs='k get service'
-  alias kd='k describe'
-  alias kdp='k describe pod'
-  alias kds='k describe service'
-  alias kl='k logs'
-  alias ke='k edit'
 
   if [ $SHLVL = 1 ]; then
-    kc "$@" >/dev/null
+    kc "" >/dev/null
   fi
 
 }
 
-function k() {
-  kubectl "$*"
-}
-
 function kubectl() { 
-  NO_PROXY="" HTTPS_PROXY="" no_proxy="" https_proxy="" KUBECONFIG=$(kubeconfig) HTTP_PROXY="" http_proxy="" /usr/local/bin/kubectl --context "$KS_CONTEXT" --namespace velero "$*" 
+  v1=$1;shift
+  NO_PROXY="" HTTPS_PROXY="" no_proxy="" https_proxy="" KUBECONFIG=$(kubeconfig) HTTP_PROXY="" http_proxy="" /usr/local/bin/kubectl $v1 --context "$KS_CONTEXT" --namespace "$KS_NAMESPACE" $@
 } 
 
+function k() {
+  kubectl "$@"
+}
+
+function kh() {
+  khelp "$@"
+}
+
+function kg() {
+  kubectl get "$@"
+}
+
+function kgp() {
+  kubectl get pods "$@"
+}
+
+function kgs() {
+  kubectl get services "$@"
+}
+
+function kd() {
+  kubectl describe "$@"
+}
+
+function kdp() {
+  kubectl describe pod "$@"
+}
+
+function kds() {
+  kubectl describe service "$@"
+}
+
+function kl() {
+  kubectl logs "$@"
+}
+
+function ke() {
+  kubectl edit "$@"
+}
+
 function helm() { 
-  KUBECONFIG=$(kubeconfig) /usr/local/bin/helm --namespace "$KS_NAMESPACE" --kube-context "$KS_CONTEXT" "$*" 
+  KUBECONFIG=$(kubeconfig) /usr/local/bin/helm --namespace "$KS_NAMESPACE" --kube-context "$KS_CONTEXT" $@
 }
 
 function velero() { 
-  KUBECONFIG=$(kubeconfig) /usr/local/bin/velero --kubecontext "$KS_CONTEXT" --namespace "$KS_NAMESPACE" "$*"
+  KUBECONFIG=$(kubeconfig) /usr/local/bin/velero --kubecontext "$KS_CONTEXT" --namespace "$KS_NAMESPACE"  $@
 }
 
 function hs() { 
 
-  fc -lim "*\$@*" 1 
+  
+  fc -lim "*${*}*" 1 
 }
 
 function kubeconfig() {
-  KUBECONFIG="$(  (ls ~/.kube/*.cfg; ls ~/.kube/config) | xargs | sed -e "s/ /:/g")"
+
+  KUBECONFIG="$(  (ls ~/.kube/*.cfg; ls ~/.kube/config ) | xargs | sed -e "s/ /:/g")"
 
   echo "$KUBECONFIG"
 }
@@ -73,10 +97,10 @@ function kc() {
     #compinit 2>/dev/null
     set -o PROMPT_SUBST
     cyan=$(printf     '\e[0m\e[36m')
-    white=$(printf     '\e[0m\e[97m')
+    white=$(printf    '\e[0m\e[97m')
     defcolor=$(printf '\e[0m\e[39m')
-    wheel=$(printf '\u2388' )
-    export PS1="%{$white%}[%{$wheel%}:%{$cyan%}$KS_CONTEXT:$KS_NAMESPACE%{$white%}]%{$defcolor%} %n:%/$ "
+    wheel=$(printf    '\u2388' )
+    export PS1="%{${white}%}[%{${wheel}%}:%{${cyan}%}$KS_CONTEXT:$KS_NAMESPACE%{${white}%}]%{${defcolor}%} %n:%/$ "
     echo "Context    :$KS_CONTEXT";
     echo "Namespace  :$KS_NAMESPACE";
     echo ""
@@ -84,7 +108,7 @@ function kc() {
     export KS_CONTEXT=$1
     /usr/local/bin/kubectl config unset current-context 
     if [ -z "$2" ]; then
-      kc 
+      kc  ""
     else
       kn "$2"
     fi
@@ -93,11 +117,11 @@ function kc() {
 
 function kn() {
   if [ -n "$1" ]; then
-    #x=`k config current-context`
+    x=`k config current-context`
     export KS_NAMESPACE=${1}
-    /usr/local/bin/kubectl config set-context "$KS_CONTEXT" --namespace="$1"
+    #/usr/local/bin/kubectl config set-context "$KS_CONTEXT" --namespace="$1"
   fi
-  kc "$@"
+  kc ""
 }
 
 
