@@ -1,5 +1,7 @@
 #!/bin/bash  
 
+trap "rm -f /tmp/test.config.$$" EXIT
+
 ### ------------  BEGIN Functions
 
 function main() {
@@ -95,7 +97,7 @@ function kc() {
   
   if [ -z "$1" ]; then
     echo ""
-    k --context "$KS_CONTEXT" -n kube-system get configmap kubeadm-config -o json 2>/dev/null | jq '. | .data | .ClusterConfiguration ' | sed -e 's/.*clusterName/ClusterName/g' -e 's/\\n.*//g' -e 's/ //'
+    #k --context "$KS_CONTEXT" -n kube-system get configmap kubeadm-config -o json 2>/dev/null | jq '. | .data | .ClusterConfiguration ' | sed -e 's/.*clusterName/ClusterName/g' -e 's/\\n.*//g' -e 's/ //'
     #k config get-contexts | grep '*' | awk '{print "Context    :  " $2 "\n" "Namespace  :  " $5}
     #vars=$(k config get-contexts | grep '*' | awk '{print "export KS_CONTEXT=" $2  ";export KS_NAMESPACE=" $5}')
     #eval $vars;
@@ -112,7 +114,7 @@ function kc() {
     echo ""
   else
     export KS_CONTEXT=$1
-    /usr/local/bin/kubectl config unset current-context 
+    #/usr/local/bin/kubectl config unset current-context 
     if [ -z "$2" ]; then
       kc  ""
     else
@@ -121,14 +123,17 @@ function kc() {
   fi
 
   export KUBECONFIG=$(kubeconfig)
+  /usr/local/bin/kubectl  config  view --context $KS_CONTEXT --namespace $KS_NAMESPACE --minify --raw=true -oyaml > /tmp/test.config.$$
+  export KUBECONFIG=/tmp/test.config.$$
+  /usr/local/bin/kubectl config set-context "$KS_CONTEXT" --namespace="$KS_NAMESPACE" 
+  /usr/local/bin/kubectl config set current-context "$KS_CONTEXT" 
+ 
 
   # reset aliases
-  NP='NO_PROXY="" HTTPS_PROXY="" no_proxy="" https_proxy="" HTTP_PROXY="" http_proxy=""'
-  #alias k="${NP} /usr/local/bin/kubectl --context $KS_CONTEXT --namespace $KS_NAMESPACE "
-  #alias kubectl="${NP} /usr/local/bin/kubectl --context $KS_CONTEXT --namespace $KS_NAMESPACE "
-  alias kubectl="${NP} /usr/local/bin/kubectl "
-  alias k="${NP} kubectl "
-  alias kgp="${NP} kubectl get pods "
+  export NP='NO_PROXY="" HTTPS_PROXY="" no_proxy="" https_proxy="" HTTP_PROXY="" http_proxy=""'
+  alias kubectl="${NP} /usr/local/bin/kubectl"
+  alias k="${NP} kubectl"
+  alias kgp="${NP} kubectl get pods"
 
 }
 
