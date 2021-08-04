@@ -1,27 +1,34 @@
-#!/bin/bash 
+#!/bin/bash  
 
 ### ------------  BEGIN Functions
 
 function main() {
 
+
   # shellcheck disable=SC1090
   source <(/usr/local/bin/kubectl completion zsh)
 
-  compdef k='kubectl'
-  setopt complete_aliases
-
-  #  Bash Version ####  complete -F _complete_alias k
+  [[ -t fd  ]] && export TERMINAL=true
+  
+  if [ "$TERMINAL" = true  ]; then
+  case $SHELL in
+   #/bin/zsh )  compdef k='kubectl'; unsetopt complete_aliases;;
+   /bin/zsh )   unsetopt complete_aliases;;
+   /bin/bash)  complete -F _complete_alias;;
+  esac
+fi
 
 
   if [ $SHLVL = 1 ]; then
     kc "" >/dev/null
   fi
 
+
 }
 
 function kubectl() { 
   v1=$1;shift
-  NO_PROXY="" HTTPS_PROXY="" no_proxy="" https_proxy="" KUBECONFIG=$(kubeconfig) HTTP_PROXY="" http_proxy="" /usr/local/bin/kubectl $v1 --context "$KS_CONTEXT" --namespace "$KS_NAMESPACE" $@
+  NO_PROXY="" HTTPS_PROXY="" no_proxy="" https_proxy="" HTTP_PROXY="" http_proxy="" /usr/local/bin/kubectl $v1 --context "$KS_CONTEXT" --namespace "$KS_NAMESPACE" $@
 } 
 
 function k() {
@@ -80,8 +87,7 @@ function hs() {
 
 function kubeconfig() {
 
-  KUBECONFIG="$(  (ls ~/.kube/*.cfg; ls ~/.kube/config ) | xargs | sed -e "s/ /:/g")"
-
+  export KUBECONFIG="$(  (ls ~/.kube/*.cfg; ls ~/.kube/config ) | xargs | sed -e "s/ /:/g")"
   echo "$KUBECONFIG"
 }
 
@@ -95,7 +101,7 @@ function kc() {
     #eval $vars;
     #autoload -Uz compinit
     #compinit 2>/dev/null
-    set -o PROMPT_SUBST
+    [[ $TERMINAL = true ]] && set -o PROMPT_SUBST
     cyan=$(printf     '\e[0m\e[36m')
     white=$(printf    '\e[0m\e[97m')
     defcolor=$(printf '\e[0m\e[39m')
@@ -113,6 +119,17 @@ function kc() {
       kn "$2"
     fi
   fi
+
+  export KUBECONFIG=$(kubeconfig)
+
+  # reset aliases
+  NP='NO_PROXY="" HTTPS_PROXY="" no_proxy="" https_proxy="" HTTP_PROXY="" http_proxy=""'
+  #alias k="${NP} /usr/local/bin/kubectl --context $KS_CONTEXT --namespace $KS_NAMESPACE "
+  #alias kubectl="${NP} /usr/local/bin/kubectl --context $KS_CONTEXT --namespace $KS_NAMESPACE "
+  alias kubectl="${NP} /usr/local/bin/kubectl "
+  alias k="${NP} kubectl "
+  alias kgp="${NP} kubectl get pods "
+
 }
 
 function kn() {
