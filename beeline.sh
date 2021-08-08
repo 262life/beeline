@@ -1,6 +1,5 @@
 #!/bin/bash  
 
-trap "rm -f /tmp/test.config.$$" EXIT
 
 ### ------------  BEGIN Functions
 
@@ -22,7 +21,7 @@ fi
 
 
   if [ $SHLVL = 1 ]; then
-    kc "" >/dev/null
+    kc "$KS_CONTEXT" "$KS_NAMESPACE"  > /dev/null
   fi
 
 
@@ -97,24 +96,20 @@ function kc() {
   
   if [ -z "$1" ]; then
     echo ""
-    #k --context "$KS_CONTEXT" -n kube-system get configmap kubeadm-config -o json 2>/dev/null | jq '. | .data | .ClusterConfiguration ' | sed -e 's/.*clusterName/ClusterName/g' -e 's/\\n.*//g' -e 's/ //'
-    #k config get-contexts | grep '*' | awk '{print "Context    :  " $2 "\n" "Namespace  :  " $5}
-    #vars=$(k config get-contexts | grep '*' | awk '{print "export KS_CONTEXT=" $2  ";export KS_NAMESPACE=" $5}')
-    #eval $vars;
-    #autoload -Uz compinit
-    #compinit 2>/dev/null
     [[ $TERMINAL = true ]] && set -o PROMPT_SUBST
     cyan=$(printf     '\e[0m\e[36m')
     white=$(printf    '\e[0m\e[97m')
     defcolor=$(printf '\e[0m\e[39m')
     wheel=$(printf    '\u2388' )
     export PS1="%{${white}%}[B:%{${cyan}%}$KS_CONTEXT:$KS_NAMESPACE%{${white}%}]%{${defcolor}%} %n:%/$ "
-    echo "Context    :$KS_CONTEXT";
-    echo "Namespace  :$KS_NAMESPACE";
+
+    KS_CLUSTER=$(/usr/local/bin/kubectl get --context "$KS_CONTEXT" cn -o custom-columns=:.spec.clusterName --no-headers=true 2>/dev/null) 
+    [[ ! -z "$KS_CLUSTER" ]] && echo "Cluster    : $KS_CLUSTER";
+    echo "Context    : $KS_CONTEXT";
+    echo "Namespace  : $KS_NAMESPACE";
     echo ""
   else
     export KS_CONTEXT=$1
-    #/usr/local/bin/kubectl config unset current-context 
     if [ -z "$2" ]; then
       kc  ""
     else
@@ -123,8 +118,8 @@ function kc() {
   fi
 
   export KUBECONFIG=$(kubeconfig)
-  /usr/local/bin/kubectl  config  view --context $KS_CONTEXT --namespace $KS_NAMESPACE --minify --raw=true -oyaml > /tmp/test.config.$$
-  export KUBECONFIG=/tmp/test.config.$$
+  /usr/local/bin/kubectl  config  view --context $KS_CONTEXT --namespace $KS_NAMESPACE --minify --raw=true -oyaml > $HOME/.kube/beeline.properties.$$
+  export KUBECONFIG=$HOME/.kube/beeline.properties.$$
   /usr/local/bin/kubectl config set-context "$KS_CONTEXT" --namespace="$KS_NAMESPACE" 
   /usr/local/bin/kubectl config set current-context "$KS_CONTEXT" 
  
@@ -168,5 +163,7 @@ kl      = kubectl logs
 EOD
 
 }
+
+trap "rm -f $HOME/.kube/beeline.properties.$$" EXIT
 
 main "$@"
