@@ -1,4 +1,4 @@
-# beeline - Documentation
+# beeline.k8s - Documentation
 
 ### These are the latest shortcuts supported:
 
