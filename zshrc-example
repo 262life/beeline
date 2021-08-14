@@ -2,7 +2,6 @@
 ###  Setup auto-completion
 eval $(/opt/homebrew/bin/brew shellenv)
 FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
-#fpath=(/usr/local/share/zsh-completions $fpath)
 
 ZSH_DISABLE_COMPFIX=true
 autoload -Uz compinit 
@@ -15,7 +14,7 @@ export KS_CONTEXT='cities'
 export KS_NAMESPACE='kube-system'
 
 [[ ! -f ~/.beeline.k8s ]]  \
-&& cp ~/projects/262life/beeline/beeline.sh ~/.beeline.k8s   #curl -s -L https://github.com/262life/beeline/releases/latest/download/beeline.sh  > ~/.beeline.k8s
+&& curl -s -L https://github.com/262life/beeline/releases/latest/download/beeline.sh  > ~/.beeline.k8s
 
 source ~/.beeline.k8s
 ##### End of Beeline

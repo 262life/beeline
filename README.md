@@ -1,4 +1,4 @@
-<img alt="bob" align="left" src="K8-Shortcut.png" width="20%" height="20%">
+<img alt="bob" align="left" src="K8-Beeline.png" width="20%" height="20%">
 
 ## beeline.k8s - A library of Kubernetes Shortcuts
 
@@ -35,6 +35,7 @@ autoload -Uz compinit
 compinit 2>/dev/null
 
 #####  Setup Beeline
+
 ## Defaults if you like
 export KS_CONTEXT='cities'
 export KS_NAMESPACE='kube-system'
