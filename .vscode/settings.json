@@ -1,15 +1,4 @@
 {
-  "terminal.integrated.defaultProfile.osx": "zsh",
-  "terminal.integrated.profiles.osx": {
-      "zsh": {
-          "color": "terminal.ansiGreen",
-          "icon": "terminal-tmux",
-          "path": "zsh",
-          "args": [
-            "-c",
-            "[[ -f .vscode/zshrc ]] && source .vscode/zshrc && exec /bin/zsh -l",
-          ]
-      }, 
-  },
+
   "shellcheck.useWorkspaceRootAsCwd": true,
 }
