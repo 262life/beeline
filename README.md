@@ -48,6 +48,12 @@ source ~/.beeline.k8s
 ```
 Restart your shell and you should be good to go!  Now, review the [documentation](DOCUMENTATION.md) 
 
+## NOTES
+
+- This is an entirely new concept that allows a different context/namespace in each terminal window.  It supports multiple logins too...
+- Significantly improves the performance
+- Currently use should ONLY use zsh for your shell for the terminal.  BASH is fine for scripting
+
 ## Contributing
 
 We welcome contributions. 

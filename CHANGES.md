@@ -1,5 +1,13 @@
 ### Changes File
 
+
+## [2.0.0] - 2021-08-14
+### Changes
+
+- This is an entirely new concept that allows a different context/namespace in each terminal window.  It supports multiple logins too...
+- Significantly improved the performance
+- Currently use should ONLY use zsh for your shell for the terminal.  BASH is fine for scripting
+
 ## [2.0.0-RC1] - 2021-07-03
 ### Changes
 
