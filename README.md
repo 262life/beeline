@@ -92,7 +92,3 @@ Builds from the master branch can have functionality changed and even removed at
 ## Licensing
 
 beeline.k8s is under the Apache 2.0 [License.](LICENSE)
-
-
-
-
