@@ -116,6 +116,20 @@ EOD
 
 }
 
+function kf () {
+
+O=$1
+shift
+F=$*
+
+k get "${O}" | grep -E "NAME|$F" 
+}
+
+function kfl () {
+
+kf $* | awk '{print $1}' | grep -v 'NAME' | xargs
+}
+
 #########################  MAIN Script starts here ###############################
 
 # shellcheck disable=SC2064
