@@ -1,12 +1,4 @@
 
-###  Setup auto-completion
-eval $(/opt/homebrew/bin/brew shellenv)
-FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
-
-ZSH_DISABLE_COMPFIX=true
-autoload -Uz compinit 
-compinit 2>/dev/null
-
 #####  Setup Beeline
 
 ## Defaults if you like

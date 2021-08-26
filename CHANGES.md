@@ -1,5 +1,10 @@
 ### Changes File
 
+## [2.1.0] - 2021-08-26
+### Changes
+
+- Added new utility functions to create a list
+- improved the documentation
 
 ## [2.0.0] - 2021-08-14
 ### Changes

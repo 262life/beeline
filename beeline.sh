@@ -4,17 +4,18 @@
 ### Main Function - Setup goes here
 function main() {
 
-  # shellcheck disable=SC1090
-  source <(/usr/local/bin/kubectl completion zsh)
-
   [[ -t fd  ]] && export TERMINAL=true  # Check if this is an interactive session
   
   if [ "$TERMINAL" = true ]; then
     case $SHELL in
-      /bin/zsh )   unsetopt complete_aliases;;
-      /bin/bash)  complete -F _complete_alias;;
+      /bin/zsh )   unsetopt complete_aliases; export KS_SHELL=zsh;;
+      /bin/bash)  complete -F _complete_alias; export KS_SHELL=bash;;
     esac
   fi
+
+  # shellcheck disable=SC1090
+  source <(/usr/local/bin/kubectl completion "$KS_SHELL")
+
 
   # set the default context and namespace from the .zshrc file
   if [ $SHLVL = 1 ] || [ "$TERM_PROGRAM" = "vscode" ]; then
@@ -75,7 +76,6 @@ function kc() {
   /usr/local/bin/kubectl config set-context "$KS_CONTEXT" --namespace="$KS_NAMESPACE" 
   /usr/local/bin/kubectl config set current-context "$KS_CONTEXT" 
  
-
   # reset aliases
 
   alias kubectl="NO_PROXY='' HTTPS_PROXY='' no_proxy='' https_proxy='' HTTP_PROXY='' http_proxy='' /usr/local/bin/kubectl"
@@ -99,7 +99,7 @@ function kc() {
 khelp() {
 
 cat <<EOD
-  These are the latest shortcuts supported:
+  These are the latest shortcuts supported.  You will find autocomplete works on all.
 
   kubectl = improved kubectl with seperate configs
   k       = kubectl
@@ -115,6 +115,14 @@ cat <<EOD
 
   helm    = improved helm v3 with seperate configs
   velero  = improved velero with seperate configs
+
+  Special utility functions:
+
+kf        = kubectl find.  This will the current context and filter the list.  You can use a '|' character to concatenate 
+            more than one filter.  Example:  Assuming the cluster is set and the namespace is kube-system *kf "coredns|calico" 
+            will return all pods that include those strings.
+kfl       = Same as *kf* but will return a list appropriate to include as a list in a kubectl command
+            Example:  *kgp $(kf "coredns|calico")* will return a filtered list of pods.  This can be used with all shortcuts.
 
 EOD
 

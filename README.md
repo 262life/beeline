@@ -16,24 +16,29 @@ beeline.k8s integrates into your bash or zsh shell to provide a number of useful
 For more details about the solutions currently supported by beeline.k8s, please refer to the [project status section](#project-status) below.
 We plan to continue adding support for many common functions required based on community demand and engagement in future releases. 
 
-## Getting Started and Documentation
+## Getting Started 
 
-To use the scripts it is *recommended* that you have setup either bash or zsh completion in advance.
-Once enabled, you can also enable kubectl's auto completion as well.
+To use the shortcut scripts it is *required* that you have setup either bash or zsh completion in advance.  Beeline will enable kubectl's auto completion on your behalf.
+
+### Installing ZSH 
+This has been tested on macOS, Ubuntu, and Windows WSL2.  
+
+I highly recommend changing your login shell to zsh.  It is *now* the <span style="color:lightgreen">*macOS*</span> default.  For Ubuntu or WSL2, the following will install zsh.  If prompted, choose any defaults.
+
+```
+sudo apt install zsh
+```
+
+and to enable autocomplete for zsh on aly of the supported environments, install oh-my-zsh as follows:
+
+```
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
 
 To enable these shortcuts you must source them into your shell.  This is dependent on the shell you are using.
-
 You can either download the desired version you would like or if you are lazy like me do something like this if you use zsh:
 
 ```
-###  Setup auto-completion
-eval $(/opt/homebrew/bin/brew shellenv)
-FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
-
-ZSH_DISABLE_COMPFIX=true
-autoload -Uz compinit 
-compinit 2>/dev/null
-
 #####  Setup Beeline
 
 ## Defaults if you like
@@ -46,13 +51,20 @@ export KS_NAMESPACE='kube-system'
 source ~/.beeline.k8s
 ##### End of Beeline
 ```
-Restart your shell and you should be good to go!  Now, review the [documentation](DOCUMENTATION.md) 
+Take note to edit the KS_CONTEXT and KS_NAMESPACE values to your liking.
+Restart your shell and you should be good to go!  
+
+Now, review the [usage documentation](DOCUMENTATION.md) 
 
 ## NOTES
 
 - This is an entirely new concept that allows a different context/namespace in each terminal window.  It supports multiple logins too...
 - Significantly improves the performance
-- Currently use should ONLY use zsh for your shell for the terminal.  BASH is fine for scripting
+- Currently use should ONLY use zsh for your shell for the terminal.  BASH is fine for scripting.
+
+### About Kubectl config files
+
+We made an improvement to kubectl config files to allow you to keep seperate kubectl files for each kubeernetes environment.  Just create a single config file for each cluster and name it some clustername.cfg and put it in the kube folder.  You can look in the examples folder for ideas.  Please note that the tokens and certs are intentionlly non working so replace with your own of course. 
 
 ## Contributing
 
