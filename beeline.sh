@@ -40,8 +40,8 @@ function kl()           { kubectl logs "$@"; }
 
 ### Utility Functions
 
-function kf() { O=$1; shift; F=$*; k get "${O}" | grep -E "NAME|$F"; }
-function kfl() { kf "$*" | awk '{print $1}' | grep -v 'NAME' | xargs; }
+function kf()           { [[ "$#" -gt 1 ]] && (O=$1; shift; F="$*"; k get "${O}" | grep -E "NAME|$F";) || echo "kf requires exactly 2 parameters"; }
+function kfl()          { [[ "$#" -gt 1 ]] && (kf "$*" | awk '{print $1}' | grep -v 'NAME' | xargs;) || echo "kfl requires exactly 2 parameters"; }
 
 ### Other miscellaneous aliases
 function helm()         { /usr/local/bin/helm "$@"; }
@@ -118,11 +118,11 @@ cat <<EOD
 
   Special utility functions:
 
-kf        = kubectl find.  This will the current context and filter the list.  You can use a '|' character to concatenate 
-            more than one filter.  Example:  Assuming the cluster is set and the namespace is kube-system *kf "coredns|calico" 
+  kf      = kubectl find.  This will the current context and filter the list.  You can use a '|' character to concatenate 
+            more than one filter.  Example:  Assuming the cluster is set and the namespace is kube-system *kf pod "coredns|calico" 
             will return all pods that include those strings.
-kfl       = Same as *kf* but will return a list appropriate to include as a list in a kubectl command
-            Example:  *kgp $(kf "coredns|calico")* will return a filtered list of pods.  This can be used with all shortcuts.
+  kfl     = Same as *kf* but will return a list appropriate to include as a list in a kubectl command
+            Example:  *kgp $(kfl service "coredns|calico")* will return a filtered list of pods.  This can be used with all shortcuts.
 
 EOD
 
