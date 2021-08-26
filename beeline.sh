@@ -37,6 +37,11 @@ function kgp()          { kubectl get pods "$@";}
 function kgs()          { kubectl get services "$@"; }
 function kl()           { kubectl logs "$@"; }
 
+### Utility Functions
+
+function kf() { O=$1; shift; F=$*; k get "${O}" | grep -E "NAME|$F"; }
+function kfl() { kf "$*" | awk '{print $1}' | grep -v 'NAME' | xargs; }
+
 ### Other miscellaneous aliases
 function helm()         { /usr/local/bin/helm "$@"; }
 function hs()           { fc -lim "*${*}*" 1; }
@@ -54,8 +59,7 @@ function kc() {
     defcolor=$(printf '\e[0m\e[39m')
     export PS1="%{${white}%}[B:%{${cyan}%}$KS_CONTEXT:$KS_NAMESPACE%{${white}%}]%{${defcolor}%} %n:%/$ "
     KS_CLUSTER=$(/usr/local/bin/kubectl get --context "$KS_CONTEXT" cn -o custom-columns=:.spec.clusterName --no-headers=true 2>/dev/null) 
-    [[ ! -z "$KS_CLUSTER" ]] && echo "Cluster    : $KS_CLUSTER";
-    #[[ -n "$KS_CLUSTER" ]] && echo "Cluster    : $KS_CLUSTER";
+    [[ -n "$KS_CLUSTER" ]] && echo "Cluster    : $KS_CLUSTER";
     echo "Context    : $KS_CONTEXT";
     echo "Namespace  : $KS_NAMESPACE";
     echo ""
@@ -114,20 +118,6 @@ cat <<EOD
 
 EOD
 
-}
-
-function kf () {
-
-O=$1
-shift
-F=$*
-
-k get "${O}" | grep -E "NAME|$F" 
-}
-
-function kfl () {
-
-kf $* | awk '{print $1}' | grep -v 'NAME' | xargs
 }
 
 #########################  MAIN Script starts here ###############################
