@@ -40,8 +40,8 @@ function kl()           { kubectl logs "$@"; }
 
 ### Utility Functions
 
-function kf()           { [[ "$#" -gt 1 ]] && (O=$1; shift; F="$*"; k get "${O}" | grep -E "NAME|$F";) || echo "kf requires exactly 2 parameters"; }
-function kfl()          { [[ "$#" -gt 1 ]] && (kf "$*" | awk '{print $1}' | grep -v 'NAME' | xargs;) || echo "kfl requires exactly 2 parameters"; }
+function kfl()          { [[ "$#" -gt 1 ]] && { kf "$@" | awk '{print $1}' | grep -v 'NAME' | xargs; } || echo "kfl requires exactly 2 parameters"; }
+function kf()           { [[ "$#" -gt 1 ]] && { O=$1; shift; F="${*}"; k get "${O}" | grep -E "NAME|$F"; } || echo "kf requires exactly 2 parameters"; }
 
 ### Other miscellaneous aliases
 function helm()         { /usr/local/bin/helm "$@"; }
