@@ -37,6 +37,7 @@ function kg()           { kubectl get "$@"; }
 function kgp()          { kubectl get pods "$@";}
 function kgs()          { kubectl get services "$@"; }
 function kl()           { kubectl logs "$@"; }
+function kn()           { if [ -n "$1" ]; then export KS_NAMESPACE=${1}; fi; kc ""; }
 
 ### Utility Functions
 
@@ -46,13 +47,12 @@ function kf()           { [[ "$#" -gt 1 ]] && { O=$1; shift; F="${*}"; k get "${
 ### Other miscellaneous aliases
 function helm()         { /usr/local/bin/helm "$@"; }
 function hs()           { fc -lim "*${*}*" 1; }
-function kn()           { if [ -n "$1" ]; then export KS_NAMESPACE=${1}; fi; kc ""; }
 function kubeconfig()   {   export KUBECONFIG; KUBECONFIG="$(  (ls ~/.kube/*.cfg; ls ~/.kube/config ) | xargs | sed -e "s/ /:/g")"; echo "$KUBECONFIG"; }
 function velero()       { /usr/local/bin/velero "$@"; }
 
 function kc() {
   
-  if [ -z "$1" ]; then
+  if [ -z "${1}" ]; then
     echo ""
     [[ $TERMINAL = true ]] && set -o PROMPT_SUBST
     cyan=$(printf     '\e[0m\e[36m')
@@ -65,8 +65,8 @@ function kc() {
     echo "Namespace  : $KS_NAMESPACE";
     echo ""
   else
-    export KS_CONTEXT=$1
-    if [ -z "$2" ]; then kc  "" else kn "$2"; fi
+    export KS_CONTEXT=${1}
+    if [ -z "${2}" ]; then kc ""; else kn "${2}"; fi
   fi
 
   export KUBECONFIG; KUBECONFIG=$(kubeconfig)
@@ -95,6 +95,7 @@ function kc() {
   alias velero="/usr/local/bin/velero"
 
 }
+
 
 khelp() {
 
