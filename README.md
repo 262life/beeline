@@ -18,7 +18,7 @@ We plan to continue adding support for many common functions required based on c
 
 ## Getting Started 
 
-To use the shortcut scripts it is *required* that you have setup either bash or zsh completion in advance.  Beeline will enable kubectl's auto completion on your behalf.
+To use the shortcut scripts it is *required* that you have setup either bash or zsh completion in advance.  Beeline will enable kubectl's auto completion on your behalf.  Also, you must have installed kubectl and helm both in /usr/local/bin and they must be executable.
 
 ### Installing ZSH 
 This has been tested on macOS, Ubuntu, and Windows WSL2.  

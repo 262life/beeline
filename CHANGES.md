@@ -1,5 +1,11 @@
 ### Changes File
 
+## [2.1.1] - 2021-09-14
+### Changes
+
+- Added new utility function to check for the required dependencies
+- improved the documentation
+
 ## [2.1.0] - 2021-08-26
 ### Changes
 

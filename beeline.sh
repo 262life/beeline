@@ -129,8 +129,36 @@ EOD
 
 }
 
+function checks() {
+
+  let bok=0
+  [[ ! -f ~/.beeline.ok ]] \
+     && { echo "Beeline - pre launch check... \n";
+          [[ -z "${ZSH_VERSION}" ]] \
+             && { echo -n "oh-my-zsh not installed.  "
+                  echo "Please install. Refer to "https://github.com/ohmyzsh/ohmyzsh" for help" 
+                  let bok+=1
+                }
+          [[ ! -x "/usr/local/bin/helm" ]] \
+             && { echo -n "helm not installed.  "
+                  echo "Please install in /usr/local/bin. Refer to "https://helm.sh/docs/intro/install/" for help"
+                  let bok+=1  
+                }
+          [[ ! -x "/usr/local/bin/kubectl" ]] \
+             && { echo -n "kubectl not installed.  "
+                  echo "Please install in /usr/local/bin. Refer to "https://kubernetes.io/docs/tasks/tools/#kubectl" for help" 
+                  let bok+=1 
+                }
+        }  
+  [[ $bok -eq 0 ]] \
+     && { touch ~/.beeline.ok 
+          return 0
+        } || return $bok
+
+}
+
 #########################  MAIN Script starts here ###############################
 
 # shellcheck disable=SC2064
 trap "rm -f ${HOME}/.kube/beeline.properties.${$}" EXIT
-main "$@"
+checks && main "$@"
