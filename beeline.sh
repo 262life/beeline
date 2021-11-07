@@ -71,6 +71,7 @@ function kc() {
 
   export KUBECONFIG; KUBECONFIG=$(kubeconfig)
   /usr/local/bin/kubectl config view --context "$KS_CONTEXT" --namespace "$KS_NAMESPACE" --minify --raw=true -oyaml > "$HOME/.kube/beeline.properties.$$"
+  chmod 700 "$HOME/.kube/beeline.properties.$$"
   
   export KUBECONFIG; KUBECONFIG="$HOME/.kube/beeline.properties.$$"
   /usr/local/bin/kubectl config set-context "$KS_CONTEXT" --namespace="$KS_NAMESPACE" 
