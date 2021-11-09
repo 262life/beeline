@@ -6,7 +6,7 @@ function main() {
 
   [[ -t fd  ]] && export TERMINAL=true  # Check if this is an interactive session
   
-  if [ "$TERMINAL" = true ]; then
+  if [ "$TERMINAL" = true ] && [ $SHLVL = 1 ]; then
     case $SHELL in
       /bin/zsh )   unsetopt complete_aliases; export KS_SHELL=zsh;;
       /bin/bash)  complete -F _complete_alias; export KS_SHELL=bash;;
@@ -54,7 +54,7 @@ function kc() {
   
   if [ -z "${1}" ]; then
     echo ""
-    [[ $TERMINAL = true ]] && set -o PROMPT_SUBST
+    [[ $TERMINAL = true ]] && [ $SHLVL = 1 ] && set -o PROMPT_SUBST
     cyan=$(printf     '\e[0m\e[36m')
     white=$(printf    '\e[0m\e[97m')
     defcolor=$(printf '\e[0m\e[39m')
@@ -70,8 +70,8 @@ function kc() {
   fi
 
   export KUBECONFIG; KUBECONFIG=$(kubeconfig)
-  /usr/local/bin/kubectl config view --context "$KS_CONTEXT" --namespace "$KS_NAMESPACE" --minify --raw=true -oyaml > "$HOME/.kube/beeline.properties.$$"
-  chmod 700 "$HOME/.kube/beeline.properties.$$"
+  /usr/local/bin/kubectl config view --context "$KS_CONTEXT" --namespace "$KS_NAMESPACE" --minify --raw=true -oyaml > "$HOME/.kube/beeline.properties.$$" \
+    && chmod 700 "$HOME/.kube/beeline.properties.$$"
   
   export KUBECONFIG; KUBECONFIG="$HOME/.kube/beeline.properties.$$"
   /usr/local/bin/kubectl config set-context "$KS_CONTEXT" --namespace="$KS_NAMESPACE" 
