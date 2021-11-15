@@ -1,5 +1,8 @@
 ### Changes File
 
+## [2.1.2] - 2021-11-7
+### Small Fixes
+
 ## [2.1.1] - 2021-09-14
 ### Changes
 
