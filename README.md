@@ -60,7 +60,7 @@ Now, review the [usage documentation](DOCUMENTATION.md)
 
 - This is an entirely new concept that allows a different context/namespace in each terminal window.  It supports multiple logins too...
 - Significantly improves the performance
-- Currently use should ONLY use zsh for your shell for the terminal.  BASH is fine for scripting.
+- Currently user should ONLY use zsh for your shell for the terminal.  BASH is fine for scripting.
 
 ### About Kubectl config files
 
@@ -84,7 +84,7 @@ Please use the following to reach members of the community:
 
 ### Reporting Security Vulnerabilities
 
-If you find a vulnerability or a potential vulnerability in Rook please let us know immediately at
+If you find a vulnerability or a potential vulnerability in beeline.k8s please let us know immediately at
 [support@262.life](mailto:support@262.life). We'll send a confirmation email to acknowledge your
 report, and we'll send an additional email when we've identified the issues positively or
 negatively.
