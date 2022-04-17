@@ -1,6 +1,7 @@
 #!/bin/bash      
 ### ^^^ Needed for Shellcheck.  Not intended to run this as a script.  It must be sourced.
 
+
 ### Main Function - Setup goes here
 function main() {
 
@@ -179,6 +180,8 @@ function colorize() {
 }
 
 #########################  MAIN Script starts here ###############################
+
+# Version: v0.0.0
 
 # shellcheck disable=SC2064
 trap "rm -f ${HOME}/.kube/beeline.properties.${$}" EXIT
