@@ -1,7 +1,12 @@
-### Changes File
+## [2.2.0-RC1] - 2022-04-17
+### Changes
+
+-  Getting ready for next release
 
 ## [2.1.2] - 2021-11-7
-### Small Fixes
+### Changes
+
+- Small Fixes
 
 ## [2.1.1] - 2021-09-14
 ### Changes
