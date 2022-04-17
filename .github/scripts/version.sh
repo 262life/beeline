@@ -10,4 +10,3 @@ sed ${sedopts} -e "s/beeline - Version\:.*$/beeline - Version: $CV/g" beeline.sh
 
 echo result:
 echo "kubectl-bob-version: $(grep 'Version:' beeline.sh)"
-
