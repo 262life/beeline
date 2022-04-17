@@ -52,5 +52,6 @@ jobs:
         with:
           args: |
             beeline.sh
-            zshrc-example
             checksum.sha512
+            zshrc-example
+            
