@@ -9,6 +9,7 @@ jobs:
     steps:
       - name: work around permission issue
         run: git config --global --add safe.directory /workspace/github
+      - name: Checkout
         uses: actions/checkout@v1
       - run: |
           echo "RELEASE_NAME_SUFFIX=(Codename: $(cat CODENAME))" >> "$GITHUB_ENV"
