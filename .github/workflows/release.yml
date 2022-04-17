@@ -38,7 +38,7 @@ jobs:
           push-branch: 'master'
           commit-message: 'publish'
           force-add: 'true'
-          files:  README.md VERSION DOCUMENTATION.md checksum.sha512"
+          files:  README.md VERSION DOCUMENTATION.md checksum.sha512
           name: rsliotta
           email: bob@bobdot.me
       - name: Release
