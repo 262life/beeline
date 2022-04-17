@@ -29,7 +29,7 @@ jobs:
           bash -c "chmod 755 .github/scripts/version.sh; .github/scripts/version.sh"
           bash -c "chmod 755 .github/scripts/readme.sh; .github/scripts/readme.sh"
           bash -c "chmod 755 .github/scripts/docs.sh; .github/scripts/docs.sh"
-          bash -c "cat beeline.sh | md5 > checksum.md5"
+          bash -c "echo "Preparing Checksum..."; echo ""; cat beeline.sh | shasum -a 512 > checksum.sha512"
       - name: push
         uses: github-actions-x/commit@v2.6
         with:
