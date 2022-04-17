@@ -8,8 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: work around permission issue
-        run: git config --global --add safe.directory /workspace/github/beeline
-      - name: Checkout
+        run: git config --global --add safe.directory /workspace/github
         uses: actions/checkout@v1
       - run: |
           echo "RELEASE_NAME_SUFFIX=(Codename: $(cat CODENAME))" >> "$GITHUB_ENV"
