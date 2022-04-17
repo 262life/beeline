@@ -64,10 +64,12 @@ function kc() {
     echo "Context    : $KS_CONTEXT";
     echo "Namespace  : $KS_NAMESPACE";
     echo ""
+    echo ""
   else
     export KS_CONTEXT=${1}
     if [ -z "${2}" ]; then kc ""; else kn "${2}"; fi
   fi
+
 
   export KUBECONFIG; KUBECONFIG=$(kubeconfig)
   /usr/local/bin/kubectl config view --context "$KS_CONTEXT" --namespace "$KS_NAMESPACE" --minify --raw=true -oyaml > "$HOME/.kube/beeline.properties.$$" \
@@ -94,6 +96,12 @@ function kc() {
   ### Other miscellaneous aliases
   alias helm="/usr/local/bin/helm"
   alias velero="/usr/local/bin/velero"
+
+
+  if [ -z "${2}" ]; then 
+    echo ""
+    /usr/local/bin/kubectl get --context "$KS_CONTEXT" nodes -o custom-columns='NAME:.metadata.name,STATUS:.status.conditions[?(@.reason=="KubeletReady")].type,ARCH:.status.nodeInfo.architecture,INTERNAL ADDRESS:status.addresses[?(@.type=="InternalIP")].address,KERNEL:.status.nodeInfo.kernelVersion,VERSION:.status.nodeInfo.kubeletVersion,OS:.status.nodeInfo.osImage,CONTAINER RUNTIME:.status.nodeInfo.containerRuntimeVersion' | colorize
+  fi
 
 }
 
@@ -155,6 +163,18 @@ function checks() {
      && { touch ~/.beeline.ok 
           return 0
         } || return $bok
+
+}
+
+function colorize() {
+  awk '
+  function color(c,s) {
+           printf("\033[%dm%s\033[0m\n",30+c,s)
+  }
+  /amd64/ {color(7,$0);next}
+  /arm64/ {color(5,$0);next}
+  {print}
+  ' $1
 
 }
 
