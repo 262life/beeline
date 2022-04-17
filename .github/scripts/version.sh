@@ -1,5 +1,8 @@
 #!/bin/bash 
 
+echo "Setting Version..."
+echo ""
+
 CV=$(cat VERSION)
 echo Version: "$CV"
 
@@ -10,3 +13,6 @@ sed ${sedopts} -e "s/beeline - Version\:.*$/beeline - Version: $CV/g" beeline.sh
 
 echo result:
 echo "kubectl-bob-version: $(grep 'Version:' beeline.sh)"
+
+echo "Version Complete"
+echo ""
