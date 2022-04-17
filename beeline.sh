@@ -110,6 +110,8 @@ function kc() {
 khelp() {
 
 cat <<EOD
+  beeline - Version: v0.0.0
+
   These are the latest shortcuts supported.  You will find autocomplete works on all.
 
   kubectl = improved kubectl with seperate configs
