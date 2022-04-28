@@ -110,7 +110,7 @@ function kc() {
 khelp() {
 
 cat <<EOD
-  beeline - Version: v0.0.0
+  beeline - Version: v2.2.0-RC1
 
   These are the latest shortcuts supported.  You will find autocomplete works on all.
 
@@ -147,8 +147,8 @@ function checks() {
   [[ ! -f ~/.beeline.ok ]] \
      && { echo "Beeline - pre launch check... \n";
           [[ -z "${ZSH_VERSION}" ]] \
-             && { echo -n "oh-my-zsh not installed.  "
-                  echo "Please install. Refer to "https://github.com/ohmyzsh/ohmyzsh" for help" 
+             && { echo -n "beeline not installed.  "
+                  echo "Please install. Refer to "https://github.com/262life/beeline" for help" 
                   let bok+=1
                 }
           [[ ! -x "/usr/local/bin/helm" ]] \
@@ -183,7 +183,7 @@ function colorize() {
 
 #########################  MAIN Script starts here ###############################
 
-# Version: v0.0.0
+# Version: v2.2.0-RC1
 
 # shellcheck disable=SC2064
 trap "rm -f ${HOME}/.kube/beeline.properties.${$}" EXIT
