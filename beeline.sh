@@ -39,7 +39,7 @@ function kgp()          { kubectl get pods "$@";}
 function kgs()          { kubectl get services "$@"; }
 function kl()           { kubectl logs "$@"; }
 function kn()           { if [ -n "$1" ]; then export KS_NAMESPACE=${1}; fi; kc ""; }
-function kv()           { echo "kubectl:" kubectl version; echo "beeline:" grep '^# Version: ' "${HOME}/.beeline.k8s" }
+function kv()           { echo "kubectl:"; kubectl version; echo "beeline:"; grep '^# Version: ' "${HOME}/.beeline.k8s" }
 
 ### Utility Functions
 
@@ -210,9 +210,7 @@ update_last_updated_file() {
 update_beeline() {
 
   echo  "${cyan}Updating...${defcolor} "
-  curl -s -L https://github.com/262life/beeline/releases/${release}/beeline.sh > "${HOME}/.beeline.k8s"
-  update_last_updated_file
-  exec $0
+  curl -s -L https://github.com/262life/beeline/releases/${release}/beeline.sh > "${HOME}/.beeline.k8s" && update_last_updated_file && exec $0
 
 }
 
@@ -226,7 +224,7 @@ release="latest/download"  #<-- to test: release="download/v2.2.0-RC1"
 ok_file="${HOME}/.beeline.ok"
 days=7
 
-#Set cool colors
+# Set cool colors
 cyan=$(printf     '\e[0m\e[36m')
 white=$(printf    '\e[0m\e[97m')
 defcolor=$(printf '\e[0m\e[39m')
