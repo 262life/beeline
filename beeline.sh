@@ -210,11 +210,11 @@ update_last_updated_file() {
 update_beeline() {
 
   echo  "${cyan}Updating...${defcolor} "
-  curl -s -L https://github.com/262life/beeline/releases/${release}/beeline.sh > "${HOME}/.beeline.k8sX" \ 
-  && mv "${HOME}/.beeline.k8sX" "${HOME}/.beeline.k8s" \
-  && update_last_updated_file \
-  && exec $0 \
-  || echo "${cyan}Updating failed...${defcolor} "
+  curl -s -L https://github.com/262life/beeline/releases/${release}/beeline.sh > "${HOME}/.beeline.k8sX"  && \
+  mv "${HOME}/.beeline.k8sX" "${HOME}/.beeline.k8s"  && \
+  update_last_updated_file && \
+  exec $0 || \
+  echo "${cyan}Updating failed...${defcolor} "
 
 }
 
