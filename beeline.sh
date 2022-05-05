@@ -213,7 +213,7 @@ update_beeline() {
   curl -s -L https://github.com/262life/beeline/releases/${release}/beeline.sh > "${HOME}/.beeline.k8sX"  && \
   mv "${HOME}/.beeline.k8sX" "${HOME}/.beeline.k8s"  && \
   update_last_updated_file && \
-  exec $0 || \
+  source "${HOME}/.beeline.k8s"  || \
   echo "${cyan}Updating failed...${defcolor} "
 
 }
