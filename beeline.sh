@@ -39,7 +39,7 @@ function kgp()          { kubectl get pods "$@";}
 function kgs()          { kubectl get services "$@"; }
 function kl()           { kubectl logs "$@"; }
 function kn()           { if [ -n "$1" ]; then export KS_NAMESPACE=${1}; fi; kc ""; }
-function kv()           { echo "kubectl:"; kubectl version; echo "beeline:"; grep '^# Version: ' "${HOME}/.beeline.k8s" }
+function kv()           { echo "kubectl:"; kubectl version; echo "beeline:"; grep '^# Version: ' "${HOME}/.beeline.k8s" | sed -e 's/^# //g' }
 
 ### Utility Functions
 
