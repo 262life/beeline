@@ -184,7 +184,7 @@ function colorize() {
 
 check_for_update() {
 
-  if [[ $(find ${ok_file} -mtime +${days}) = "$ok_file" ]]; then
+  if [[ $(find ${ok_file} -mtime +${days} 2>/dev/null) = "$ok_file" ]]; then
     candidate=$(curl -s -L https://github.com/262life/beeline/releases/${release}/checksum.sha512)
     current=$(cat ~/.beeline.k8s | shasum -a 512)
     if [[ "$candidate" != "$current" ]] ; then
