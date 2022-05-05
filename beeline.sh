@@ -39,7 +39,7 @@ function kgp()          { kubectl get pods "$@";}
 function kgs()          { kubectl get services "$@"; }
 function kl()           { kubectl logs "$@"; }
 function kn()           { if [ -n "$1" ]; then export KS_NAMESPACE=${1}; fi; kc ""; }
-function kv()           { kubectl version; grep "# Version: " "${HOME}/beeline.k8s" }
+function kv()           { echo "kubectl:" kubectl version; echo "beeline:" grep '^# Version: ' "${HOME}/.beeline.k8s" }
 
 ### Utility Functions
 
@@ -57,9 +57,6 @@ function kc() {
   if [ -z "${1}" ]; then
     echo ""
     [[ $TERMINAL = true ]] && [ $SHLVL = 1 ] && set -o PROMPT_SUBST
-    cyan=$(printf     '\e[0m\e[36m')
-    white=$(printf    '\e[0m\e[97m')
-    defcolor=$(printf '\e[0m\e[39m')
     export PS1="%{${white}%}[B:%{${cyan}%}$KS_CONTEXT:$KS_NAMESPACE%{${white}%}]%{${defcolor}%} %n:%/$ "
     KS_CLUSTER=$(/usr/local/bin/kubectl get --context "$KS_CONTEXT" cn -o custom-columns=:.spec.clusterName --no-headers=true 2>/dev/null) 
     [[ -n "$KS_CLUSTER" ]] && echo "Cluster    : $KS_CLUSTER";
@@ -224,9 +221,15 @@ update_beeline() {
 
 # Version: v2.2.0-RC1
 
+# Global settings
 release="latest/download"  #<-- to test: release="download/v2.2.0-RC1"
 ok_file="${HOME}/.beeline.ok"
 days=7
+
+#Set cool colors
+cyan=$(printf     '\e[0m\e[36m')
+white=$(printf    '\e[0m\e[97m')
+defcolor=$(printf '\e[0m\e[39m')
 
 
 # shellcheck disable=SC2064
