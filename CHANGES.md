@@ -1,3 +1,8 @@
+## [2.2.0-RC2] - 2022-05-05
+### Changes
+
+-  Incorporating update check logic
+
 ## [2.2.0-RC1] - 2022-04-17
 ### Changes
 
