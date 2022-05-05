@@ -1,3 +1,9 @@
+## [2.2.0] - 2022-05-05
+### Changes
+
+-  Incorporating update check logic
+-  New kv shortcut to show running version
+
 ## [2.2.0-RC2] - 2022-05-05
 ### Changes
 
