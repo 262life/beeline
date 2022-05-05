@@ -39,6 +39,7 @@ function kgp()          { kubectl get pods "$@";}
 function kgs()          { kubectl get services "$@"; }
 function kl()           { kubectl logs "$@"; }
 function kn()           { if [ -n "$1" ]; then export KS_NAMESPACE=${1}; fi; kc ""; }
+function kv()           { kubectl version; grep "# Version: " "${HOME}/beeline.k8s" }
 
 ### Utility Functions
 
@@ -106,7 +107,6 @@ function kc() {
 
 }
 
-
 khelp() {
 
 cat <<EOD
@@ -125,6 +125,7 @@ cat <<EOD
   kgp     = kubectl get pods
   kgs     = kubectl get services
   kl      = kubectl logs
+  kv      = kubectl & beeline version
 
   helm    = improved helm v3 with seperate configs
   velero  = improved velero with seperate configs
@@ -144,7 +145,7 @@ EOD
 function checks() {
 
   let bok=0
-  [[ ! -f ~/.beeline.ok ]] \
+  [[ ! -f ${ok_file} ]] \
      && { echo "Beeline - pre launch check... \n";
           [[ -z "${ZSH_VERSION}" ]] \
              && { echo -n "beeline not installed.  "
@@ -163,7 +164,7 @@ function checks() {
                 }
         }  
   [[ $bok -eq 0 ]] \
-     && { touch ~/.beeline.ok 
+     && { touch ${ok_file}
           return 0
         } || return $bok
 
@@ -177,14 +178,57 @@ function colorize() {
   /amd64/ {color(7,$0);next}
   /arm64/ {color(5,$0);next}
   {print}
-  ' $1
+  '   #### $1
 
 }
+
+check_for_update() {
+
+  if [[ $(find ${ok_file} -mtime +${days}) = "$ok_file" ]]; then
+    candidate=$(curl -s -L https://github.com/262life/beeline/releases/${release}/checksum.sha512)
+    current=$(cat ~/.beeline.k8s | shasum -a 512)
+    if [[ "$candidate" != "$current" ]] ; then
+
+      # Ask for confirmation and only update on 'y', 'Y' or Enter
+      # Otherwise just show a reminder for how to update
+      echo -n "${cyan}[beeline] Would you like to update? ${white}[${cyan}Y/n${white}]${defcolor} "
+      read -r -k 1 option
+      [[ "$option" = $'\n' ]] || echo
+      case "$option" in
+        [yY$'\n']) update_beeline ;;
+        [nN]) update_last_updated_file ;&
+        *) echo "[beeline] You can update manually by ........" ;;
+      esac
+    fi
+  fi
+
+}
+
+update_last_updated_file() {
+
+  touch  ${ok_file}
+
+}
+
+update_beeline() {
+
+  curl -s -L https://github.com/262life/beeline/releases/${release}/beeline.sh > "${HOME}/.beeline.k8s"
+  update_last_updated_file
+  source  ${HOME}/.beeline.k8s
+
+}
+
 
 #########################  MAIN Script starts here ###############################
 
 # Version: v2.2.0-RC1
 
+release="latest/download"  #<-- to test: release="download/v2.2.0-RC1"
+ok_file="${HOME}/.beeline.ok"
+days=7
+
+
 # shellcheck disable=SC2064
 trap "rm -f ${HOME}/.kube/beeline.properties.${$}" EXIT
+check_for_update
 checks && main "$@"
