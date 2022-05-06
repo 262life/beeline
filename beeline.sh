@@ -1,7 +1,6 @@
 #!/bin/bash      
 ### ^^^ Needed for Shellcheck.  Not intended to run this as a script.  It must be sourced.
 
-
 ### Main Function - Setup goes here
 function main() {
 
