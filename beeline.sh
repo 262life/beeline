@@ -57,7 +57,7 @@ function kc() {
   if [ -z "${1}" ]; then
     echo ""
     [[ $TERMINAL = true ]] && [ $SHLVL = 1 ] && set -o PROMPT_SUBST
-    export PS1="%{${white}%}[B:%{${cyan}%}$KS_CONTEXT:$KS_NAMESPACE%{${white}%}]%{${defcolor}%} %n:%/$ "
+    export PS1="%{${white}%}[B:%{${cyan}%}$KS_CONTEXT:$KS_NAMESPACE%{${white}%}]%{${defcolor}%} %{${cyan}%}%n@%m%{${defcolor}%}:%/$ "
     KS_CLUSTER=$(/usr/local/bin/kubectl get --context "$KS_CONTEXT" cn -o custom-columns=:.spec.clusterName --no-headers=true 2>/dev/null) 
     [[ -n "$KS_CLUSTER" ]] && echo "Cluster    : $KS_CLUSTER";
     echo "Context    : $KS_CONTEXT";
