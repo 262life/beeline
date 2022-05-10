@@ -1,3 +1,8 @@
+## [2.2.1] - 2022-05-10
+### Changes
+
+-  Small fix for XTerminals
+
 ## [2.2.0] - 2022-05-05
 ### Changes
 
