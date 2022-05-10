@@ -5,8 +5,9 @@
 function main() {
 
   [[ -t fd  ]] && export TERMINAL=true  # Check if this is an interactive session
-  
-  if [ "$TERMINAL" = true ] && [ $SHLVL = 1 ]; then
+  if [ $SHLVL = 1 ] || [ $SHLVL = 2 ];then  export BEELINE=true; fi
+
+  if [ "$TERMINAL" = true ] && [ "$BEELINE" = true ]; then
     case $SHELL in
       /bin/zsh )   unsetopt complete_aliases; export KS_SHELL=zsh;;
       /bin/bash)  complete -F _complete_alias; export KS_SHELL=bash;;
@@ -18,7 +19,7 @@ function main() {
 
 
   # set the default context and namespace from the .zshrc file
-  if [ $SHLVL = 1 ] || [ "$TERM_PROGRAM" = "vscode" ]; then
+  if [ "$BEELINE" = true ] || [ "$TERM_PROGRAM" = "vscode" ]; then
   kc >/dev/null
   fi
 
@@ -106,7 +107,7 @@ function kc() {
 khelp() {
 
 cat <<EOD
-  beeline - Version: v2.2.0-RC1
+  beeline - Version: v2.2.0
 
   These are the latest shortcuts supported.  You will find autocomplete works on all.
 
@@ -220,7 +221,7 @@ update_beeline() {
 
 #########################  MAIN Script starts here ###############################
 
-# Version: v2.2.0-RC1
+# Version: v2.2.0
 
 # Global settings
 release="latest/download"  #<-- to test: release="download/v2.2.0-RC1"
