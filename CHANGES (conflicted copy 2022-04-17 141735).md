@@ -1,24 +1,3 @@
-## [2.2.2] - 2022-05-27
-### Changes
-
--  Small fix for kc command
-
-## [2.2.1] - 2022-05-10
-### Changes
-
--  Small fix for XTerminals
-
-## [2.2.0] - 2022-05-05
-### Changes
-
--  Incorporating update check logic
--  New kv shortcut to show running version
-
-## [2.2.0-RC2] - 2022-05-05
-### Changes
-
--  Incorporating update check logic
-
 ## [2.2.0-RC1] - 2022-04-17
 ### Changes
 
