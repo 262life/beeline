@@ -1,3 +1,11 @@
+## [2.2.3] - 2022-09-23
+### Changes
+
+-  One fix for kc command for PS1 variable visiability
+-  Untangled some code around kc and kn command
+-  Suppressed some context output
+-  Removed some useless cat commands based on spellcheck recommendations
+
 ## [2.2.2] - 2022-05-27
 ### Changes
 

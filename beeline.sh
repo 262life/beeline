@@ -39,7 +39,7 @@ function kgp()          { kubectl get pods "$@";}
 function kgs()          { kubectl get services "$@"; }
 function kl()           { kubectl logs "$@"; }
 function kn()           { if [ -n "$1" ]; then export KS_NAMESPACE=${1}; fi; kc ""; }
-function kv()           { echo "kubectl:"; kubectl version; echo "beeline:"; grep '^# Version: ' "${HOME}/.beeline.k8s" | sed -e 's/^# //g' }
+function kv()           { echo "kubectl:"; kubectl version; echo "beeline:"; grep '^# Version: ' "${HOME}/.beeline.k8s" | sed -e 's/^# //g'; }
 
 ### Utility Functions
 
@@ -57,26 +57,24 @@ function kc() {
   if [ -z "${1}" ]; then
     echo ""
     [[ $TERMINAL = true ]] && [ $SHLVL = 1 ] && set -o PROMPT_SUBST
-    export PS1="%{${white}%}[B:%{${cyan}%}$KS_CONTEXT:$KS_NAMESPACE%{${white}%}]%{${defcolor}%} %{${cyan}%}%n@%m%{${defcolor}%}:%/$ "
-    KS_CLUSTER=$(/usr/local/bin/kubectl get --context "$KS_CONTEXT" cn -o custom-columns=:.spec.clusterName --no-headers=true 2>/dev/null) 
+    KS_CLUSTER=$(/usr/local/bin/kubectl get --context "$KS_CONTEXT" cn -o custom-columns=:.spec.clusterName --no-headers=true 2>/dev/null ) 
     [[ -n "$KS_CLUSTER" ]] && echo "Cluster    : $KS_CLUSTER";
     echo "Context    : $KS_CONTEXT";
     echo "Namespace  : $KS_NAMESPACE";
-    echo ""
-    echo ""
   else
     export KS_CONTEXT=${1}
-    #if [ -z "${2}" ]; then kc ""; else kn "${2}"; fi
+    if [ -n "${2}" ]; then kn "${2}"; fi
   fi
 
+  export PS1="%{${white}%}[B:%{${cyan}%}$KS_CONTEXT:$KS_NAMESPACE%{${white}%}]%{${defcolor}%} %{${cyan}%}%n@%m%{${defcolor}%}:%/$ "
 
   export KUBECONFIG; KUBECONFIG=$(kubeconfig)
-  /usr/local/bin/kubectl config view --context "$KS_CONTEXT" --namespace "$KS_NAMESPACE" --minify --raw=true -oyaml > "$HOME/.kube/beeline.properties.$$" \
+  /usr/local/bin/kubectl config view --context "$KS_CONTEXT" --namespace "$KS_NAMESPACE" --minify --raw=true -oyaml  > "$HOME/.kube/beeline.properties.$$" \
     && chmod 700 "$HOME/.kube/beeline.properties.$$"
   
   export KUBECONFIG; KUBECONFIG="$HOME/.kube/beeline.properties.$$"
-  /usr/local/bin/kubectl config set-context "$KS_CONTEXT" --namespace="$KS_NAMESPACE" 
-  /usr/local/bin/kubectl config set current-context "$KS_CONTEXT" 
+  /usr/local/bin/kubectl config set-context "$KS_CONTEXT" --namespace="$KS_NAMESPACE"  >/dev/null
+  /usr/local/bin/kubectl config set current-context "$KS_CONTEXT" >/dev/null
  
   # reset aliases
 
@@ -106,7 +104,7 @@ function kc() {
 khelp() {
 
 cat <<EOD
-  beeline - Version: v2.2.1
+  beeline - Version: v2.2.2
 
   These are the latest shortcuts supported.  You will find autocomplete works on all.
 
@@ -140,27 +138,27 @@ EOD
 
 function checks() {
 
-  let bok=0
+  (( bok=0 ))
   [[ ! -f ${ok_file} ]] \
-     && { echo "Beeline - pre launch check... \n";
+     && { printf "Beeline - pre launch check... \n";
           [[ -z "${ZSH_VERSION}" ]] \
              && { echo -n "beeline not installed.  "
-                  echo "Please install. Refer to "https://github.com/262life/beeline" for help" 
-                  let bok+=1
+                  echo "Please install. Refer to 'https://github.com/262life/beeline' for help" 
+                  (( bok+=1 ))
                 }
           [[ ! -x "/usr/local/bin/helm" ]] \
              && { echo -n "helm not installed.  "
-                  echo "Please install in /usr/local/bin. Refer to "https://helm.sh/docs/intro/install/" for help"
-                  let bok+=1  
+                  echo "Please install in /usr/local/bin. Refer to 'https://helm.sh/docs/intro/install/' for help"
+                  ((bok+=1))  
                 }
           [[ ! -x "/usr/local/bin/kubectl" ]] \
              && { echo -n "kubectl not installed.  "
-                  echo "Please install in /usr/local/bin. Refer to "https://kubernetes.io/docs/tasks/tools/#kubectl" for help" 
-                  let bok+=1 
+                  echo "Please install in /usr/local/bin. Refer to 'https://kubernetes.io/docs/tasks/tools/#kubectl' for help" 
+                  (( bok+=1 ))
                 }
         }  
   [[ $bok -eq 0 ]] \
-     && { touch ${ok_file}
+     && { touch "${ok_file}"
           return 0
         } || return $bok
 
@@ -180,9 +178,9 @@ function colorize() {
 
 check_for_update() {
 
-  if [[ $(find ${ok_file} -mtime +${days} 2>/dev/null) = "$ok_file" ]]; then
-    candidate=$(curl -s -L https://github.com/262life/beeline/releases/${release}/checksum.sha512)
-    current=$(cat ~/.beeline.k8s | shasum -a 512)
+  if [[ $(find "${ok_file}" -mtime +"${days}" 2>/dev/null) = "$ok_file" ]]; then
+    candidate=$(curl -s -L "https://github.com/262life/beeline/releases/${release}/checksum.sha512")
+    current=$(shasum -a 512 < ~/.beeline.k8s)
     if [[ "$candidate" != "$current" ]] ; then
 
       # Ask for confirmation and only update on 'y', 'Y' or Enter
@@ -202,17 +200,18 @@ check_for_update() {
 
 update_last_updated_file() {
 
-  touch  ${ok_file}
+  touch  "${ok_file}"
 
 }
 
 update_beeline() {
-
+ 
   echo  "${cyan}Updating...${defcolor} "
-  curl -s -L https://github.com/262life/beeline/releases/${release}/beeline.sh > "${HOME}/.beeline.k8sX"  && \
+  # shellcheck disable=SC1091
+  curl -s -L "https://github.com/262life/beeline/releases/${release}/beeline.sh" > "${HOME}/.beeline.k8sX"  && \
   mv "${HOME}/.beeline.k8sX" "${HOME}/.beeline.k8s"  && \
   update_last_updated_file && \
-  source "${HOME}/.zshrc"  || \
+  source "${HOME}/.zshrc" || \
   echo "${cyan}Updating failed...${defcolor} "
 
 }
@@ -220,7 +219,7 @@ update_beeline() {
 
 #########################  MAIN Script starts here ###############################
 
-# Version: v2.2.1
+# Version: v2.2.2
 
 # Global settings
 release="latest/download"  #<-- to test: release="download/v2.2.0-RC1"
