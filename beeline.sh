@@ -39,6 +39,7 @@ function kgp()          { kubectl get pods "$@";}
 function kgs()          { kubectl get services "$@"; }
 function kl()           { kubectl logs "$@"; }
 function kn()           { if [ -n "$1" ]; then export KS_NAMESPACE=${1}; fi; kc ""; }
+function ku()           { touch -d 2000-01-0100:00:00 ~/.beeline.ok; check_for_update; }
 function kv()           { echo "kubectl:"; kubectl version; echo "beeline:"; grep '^# Version: ' "${HOME}/.beeline.k8s" | sed -e 's/^# //g'; }
 
 ### Utility Functions
@@ -119,6 +120,7 @@ cat <<EOD
   kgp     = kubectl get pods
   kgs     = kubectl get services
   kl      = kubectl logs
+  ku      = force an update check for beeline
   kv      = kubectl & beeline version
 
   helm    = improved helm v3 with seperate configs
