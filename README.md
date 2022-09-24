@@ -6,7 +6,7 @@ This is a collection of kubectl and bash/zsh shortcuts to make interactions with
 
 ![Hex.pm](https://img.shields.io/hexpm/l/apa)
 [![CodeFactor](https://www.codefactor.io/repository/github/262life/beeline/badge)](https://www.codefactor.io/repository/github/262life/beeline)
-![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/262life/beeline/release/v2.2.2?label=build%20v2.2.2)
+![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/262life/beeline/release/v2.2.3?label=build%20v2.2.3)
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/262life/beeline)
 ![Twitter Follow](https://img.shields.io/twitter/follow/262life?style=social)
 [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/262life/beeline)
