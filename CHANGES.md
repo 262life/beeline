@@ -1,3 +1,9 @@
+
+## [2.2.4] - 2022-09-23
+### Add
+
+-  Added a new ku function to force an update check
+
 ## [2.2.3] - 2022-09-23
 ### Changes
 
