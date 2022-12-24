@@ -8,7 +8,7 @@ echo ""
 echo "# beeline.k8s - Documentation" > DOCUMENTATION.md
 echo ""             >> DOCUMENTATION.md
 
-apt -y install zsh
+sudo apt -y install zsh
 
 zsh ./beeline.sh --help >>DOCUMENTATION.md
 
