@@ -1,4 +1,12 @@
 
+## [2.2.5] - 2022-12-24
+### Changes
+
+- Improved functions if no default KS_CONTEXT is set
+- Added a check for .kube folder
+- Added a test for empty properties file
+- Fixed if running in a script
+
 ## [2.2.4] - 2022-09-23
 ### Add
 

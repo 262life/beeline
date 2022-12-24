@@ -10,12 +10,11 @@ function main() {
   if [ "$TERMINAL" = true ] && [ "$BEELINE" = true ]; then
     case $SHELL in
       /bin/zsh )   unsetopt complete_aliases; export KS_SHELL=zsh;;
-      /bin/bash)  complete -F _complete_alias; export KS_SHELL=bash;;
     esac
   fi
 
   # shellcheck disable=SC1090
-  source <(/usr/local/bin/kubectl completion "$KS_SHELL")
+    source <(/usr/local/bin/kubectl completion "$KS_SHELL") 2>/dev/null
 
 
   # set the default context and namespace from the .zshrc file
@@ -50,12 +49,12 @@ function kf()           { [[ "$#" -gt 1 ]] && { O=$1; shift; F="${*}"; k get "${
 ### Other miscellaneous aliases
 function helm()         { /usr/local/bin/helm "$@"; }
 function hs()           { fc -lim "*${*}*" 1; }
-function kubeconfig()   {   export KUBECONFIG; KUBECONFIG="$(  (ls ~/.kube/*.cfg; ls ~/.kube/config ) | xargs | sed -e "s/ /:/g")"; echo "$KUBECONFIG"; }
+function kubeconfig()   {   export KUBECONFIG; KUBECONFIG="$(  (ls ~/.kube/*.cfg; ls ~/.kube/config ) 2>/dev/null | xargs | sed -e "s/ /:/g")"; echo "$KUBECONFIG"; }
 function velero()       { /usr/local/bin/velero "$@"; }
 
 function kc() {
-  
-  if [ -z "${1}" ]; then
+
+  if [[ -z "${1}" ]] && [[ ! -z "$KS_CONTEXT" ]]; then
     echo ""
     [[ $TERMINAL = true ]] && [ $SHLVL = 1 ] && set -o PROMPT_SUBST
     KS_CLUSTER=$(/usr/local/bin/kubectl get --context "$KS_CONTEXT" cn -o custom-columns=:.spec.clusterName --no-headers=true 2>/dev/null ) 
@@ -64,18 +63,21 @@ function kc() {
     echo "Namespace  : $KS_NAMESPACE";
   else
     export KS_CONTEXT=${1}
-    if [ -n "${2}" ]; then kn "${2}"; fi
+    if [[ -n "${2}" ]] && [[ ! -z "$KS_CONTEXT" ]]; then kn "${2}"; fi
   fi
 
   export PS1="%{${white}%}[B:%{${cyan}%}$KS_CONTEXT:$KS_NAMESPACE%{${white}%}]%{${defcolor}%} %{${cyan}%}%n@%m%{${defcolor}%}:%/$ "
 
   export KUBECONFIG; KUBECONFIG=$(kubeconfig)
-  /usr/local/bin/kubectl config view --context "$KS_CONTEXT" --namespace "$KS_NAMESPACE" --minify --raw=true -oyaml  > "$HOME/.kube/beeline.properties.$$" \
-    && chmod 700 "$HOME/.kube/beeline.properties.$$"
-  
-  export KUBECONFIG; KUBECONFIG="$HOME/.kube/beeline.properties.$$"
-  /usr/local/bin/kubectl config set-context "$KS_CONTEXT" --namespace="$KS_NAMESPACE"  >/dev/null
-  /usr/local/bin/kubectl config set current-context "$KS_CONTEXT" >/dev/null
+
+  if [[ ! -z "$KS_CONTEXT" ]]; then
+    /usr/local/bin/kubectl config view --context "$KS_CONTEXT" --namespace "$KS_NAMESPACE" --minify --raw=true -oyaml  > "$HOME/.kube/beeline.properties.$$" \
+      && chmod 700 "$HOME/.kube/beeline.properties.$$"
+
+    export KUBECONFIG; KUBECONFIG="$HOME/.kube/beeline.properties.$$"
+    /usr/local/bin/kubectl config set-context "$KS_CONTEXT" --namespace="$KS_NAMESPACE"  >/dev/null
+    /usr/local/bin/kubectl config set current-context "$KS_CONTEXT" >/dev/null
+  fi
  
   # reset aliases
 
@@ -95,17 +97,17 @@ function kc() {
   alias helm="/usr/local/bin/helm"
   alias velero="/usr/local/bin/velero"
 
-  if [ -z "${2}" ]; then 
+  if [[ -z "${2}" ]] &&  [[ ! -z "$KS_CONTEXT" ]]; then
     echo ""
     /usr/local/bin/kubectl get --context "$KS_CONTEXT" nodes -o custom-columns='NAME:.metadata.name,STATUS:.status.conditions[?(@.reason=="KubeletReady")].type,ARCH:.status.nodeInfo.architecture,INTERNAL ADDRESS:status.addresses[?(@.type=="InternalIP")].address,KERNEL:.status.nodeInfo.kernelVersion,VERSION:.status.nodeInfo.kubeletVersion,OS:.status.nodeInfo.osImage,CONTAINER RUNTIME:.status.nodeInfo.containerRuntimeVersion' | colorize
   fi
 
 }
 
-khelp() {
+function khelp() {
 
-cat <<EOD
-  beeline - Version: v2.2.2
+cat <<:EOD
+  beeline - Version: v2.2.4
 
   These are the latest shortcuts supported.  You will find autocomplete works on all.
 
@@ -132,9 +134,9 @@ cat <<EOD
             more than one filter.  Example:  Assuming the cluster is set and the namespace is kube-system *kf pod "coredns|calico" 
             will return all pods that include those strings.
   kfl     = Same as *kf* but will return a list appropriate to include as a list in a kubectl command
-            Example:  *kgp $(kfl service "coredns|calico")* will return a filtered list of pods.  This can be used with all shortcuts.
+            Example:  *kgp \$(kfl service "coredns|calico")* will return a filtered list of pods.  This can be used with all shortcuts.
 
-EOD
+:EOD
 
 }
 
@@ -158,6 +160,8 @@ function checks() {
                   echo "Please install in /usr/local/bin. Refer to 'https://kubernetes.io/docs/tasks/tools/#kubectl' for help" 
                   (( bok+=1 ))
                 }
+          [[ ! -d "$HOME/.kube" ]] \
+             && { mkdir "$HOME/.kube"; touch "$HOME/.kube/config" }
         }  
   [[ $bok -eq 0 ]] \
      && { touch "${ok_file}"
@@ -189,10 +193,10 @@ check_for_update() {
       # Otherwise just show a reminder for how to update
       echo -n "${cyan}[beeline] Would you like to update? ${white}[${cyan}Y/n${white}]${defcolor} "
       read -r -k 1 option
-      [[ "$option" = $'\n' ]] || echo
+      [[ "$option" = $'\n' ]] || echo;
       case "$option" in
         [yY$'\n']) update_beeline ;;
-        [nN]) update_last_updated_file ;&
+        [nN]) update_last_updated_file ;;
         *) echo "[beeline] You can update manually by ........" ;;
       esac
     fi
@@ -221,20 +225,25 @@ update_beeline() {
 
 #########################  MAIN Script starts here ###############################
 
-# Version: v2.2.2
+# Version: v2.2.4
 
 # Global settings
 release="latest/download"  #<-- to test: release="download/v2.2.0-RC1"
 ok_file="${HOME}/.beeline.ok"
 days=7
 
+# Check for build
+if [[ "${1}" = "--help" ]]; then 
+  khelp 
+  exit 
+fi;
+
 # Set cool colors
 cyan=$(printf     '\e[0m\e[36m')
 white=$(printf    '\e[0m\e[97m')
 defcolor=$(printf '\e[0m\e[39m')
 
-
 # shellcheck disable=SC2064
-trap "rm -f ${HOME}/.kube/beeline.properties.${$}" EXIT
+trap "rm -f ${HOME}/.kube/beeline.properties.${$} 2>/dev/null" EXIT
 check_for_update
 checks && main "$@"

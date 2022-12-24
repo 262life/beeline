@@ -8,8 +8,9 @@ echo ""
 echo "# beeline.k8s - Documentation" > DOCUMENTATION.md
 echo ""             >> DOCUMENTATION.md
 
-source beeline.sh
-kh 2>>DOCUMENTATION.md
+apt -y install zsh
+
+zsh ./beeline.sh --help >>DOCUMENTATION.md
 
 echo "Completed docs"
 echo ""
