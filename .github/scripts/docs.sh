@@ -10,7 +10,9 @@ echo ""             >> DOCUMENTATION.md
 
 sudo apt -y install zsh
 
-zsh ./beeline.sh --help >>DOCUMENTATION.md
+echo '```' >> DOCUMENTATION.md
+zsh ./beeline.sh --help >> DOCUMENTATION.md
+echo '```' >> DOCUMENTATION.md
 
 echo "Completed docs"
 echo ""
